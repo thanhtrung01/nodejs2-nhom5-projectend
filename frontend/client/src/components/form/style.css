@@ -1,0 +1,53 @@
+.wrapper{
+    width: 100%;
+    height: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+}
+.form-title{
+    text-align: center;
+    padding: 1rem 0;
+}
+.form-create{
+    height: auto;
+    min-width: 300px;
+    min-height: 400px;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.4);
+    padding: 0 2rem;
+    padding-bottom: 2rem;
+}
+.form-group{
+    margin-top: 10px;
+}
+.form-create label, input, textarea {
+    display: block;
+    width: 100%;
+}
+.form-create label{
+    color: gray;
+    font-size: 16px;
+    font-style: italic;
+    font-weight: bold;
+    padding: 0.5rem 0;
+}
+
+.form-create input{
+    padding: 0.6rem 0;
+}
+.form-create input[type="button"]{
+    color: white ;
+    background-color:rgba(0, 0, 0, 0.753);
+    border: none;
+    transition: all 0.5s ease;
+}
+.form-create input[type="button"]:hover{
+    background-color:rgba(0, 0, 0, 0.5);
+    cursor: pointer;
+}
+.form-create textarea{
+    height: 100px;
+}

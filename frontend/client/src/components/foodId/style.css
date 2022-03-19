@@ -1,0 +1,145 @@
+.warraper-food{
+    width: 100%;
+    height: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.container-food{
+    max-width: 400px;
+    min-width: 400px;
+    height: 400px;
+    padding: 2rem 2rem;
+
+}
+.container-food:first-child{
+    background-color: blue;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container-food h1{
+    font-size: 50px;
+    color:white;
+}
+
+.title-food{
+    font-size: 42px;
+    padding-bottom: 1rem;
+}
+
+.price-food{
+    font-size: 24px;
+    padding: 1rem 0;
+}
+
+.price-food_sub{
+    color: red;
+    font-style: italic;
+}
+
+.description-food{
+    font-size: 16px;
+    font-style: italic;
+    color: grey;
+}
+.btn-food{
+    padding: 3rem 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+
+}
+
+.btn-food button{
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+}
+
+.btn-food button.btn-food_edit{
+    background-color: rgb(45, 45, 255);
+
+}
+.btn-food button.btn-food_edit:hover{
+    background-color: rgba(45, 45, 255,0.7);
+
+
+}
+.btn-food button.btn-food_delete{
+    background-color: rgb(252, 49, 49);
+}
+.btn-food button.btn-food_delete:hover{
+    background-color: rgba(252, 49, 49,0.7);
+}
+
+/*  */
+.container-background{
+    background-color: rgba(128, 128, 128, 0.6);
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+}
+
+.form__food{
+    max-width: 380px;
+    height: auto;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.425);
+    padding: 1rem 2rem 2rem 2rem;
+}
+
+.form__food button{
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    margin: 0 1rem;
+}
+
+.form__food button.btn-food_edit{
+    background-color: rgb(45, 45, 255);
+
+}
+.form__food button.btn-food_edit:hover{
+    background-color: rgba(45, 45, 255,0.7);
+
+
+}
+.form__food button.btn-food_delete{
+    background-color: rgb(252, 49, 49);
+}
+.form__food button.btn-food_delete:hover{
+    background-color: rgba(252, 49, 49,0.7);
+}
+
+.click{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 1rem;
+    font-weight: bold;
+    font-size: 18px;
+    font-family: 'Arial';
+    transition: all 0.25s ease;
+}
+
+.click-x{
+    cursor: pointer;
+}
+.click-x:hover{
+    color: gray;
+}
