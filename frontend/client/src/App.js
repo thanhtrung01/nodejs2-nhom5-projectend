@@ -8,11 +8,11 @@ import {
 	Link,
 	Redirect,
 } from 'react-router-dom';
-import Profile from './pages/Profile';
-import Cart from './pages/Cart';
-import Login from './pages/Login';
+import ProfilePage from './pages/ProfilePage';
+import CartPage from './pages/CartPage';
+import LoginPage from './pages/LoginPage';
 import { useState } from 'react';
-import DetailProduct from './pages/DetailProduct';
+import DetailProductPage from './pages/DetailProductPage';
 
 function App() {
 	const [isLogin, setIsLogin] = useState(true);
@@ -43,13 +43,13 @@ function App() {
 							<HomePage />
 						</Route>
 						<Route path="/cart">
-							<Cart />
+							<CartPage />
 						</Route>
 						<Route path="/profile">
-							<Profile />
+							<ProfilePage />
 						</Route>
 						<Route path="/detail-product">
-							<DetailProduct />
+							<DetailProductPage />
 						</Route>
 					</Switch>
 				</div>
@@ -66,7 +66,7 @@ function App() {
 					)}
 				</Route>
 				<Route path="/login">
-					<Login />
+					<LoginPage />
 				</Route>
 			</Switch>
 		</Router>
