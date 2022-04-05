@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 function CartPage(props) {
-	return <div>CartPage</div>;
+	return <div>CartPage HEllo</div>;
 }
 
 CartPage.propTypes = {};
