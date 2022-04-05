@@ -8,3 +8,4 @@ function DetailProduct(props) {
 DetailProduct.propTypes = {};
 
 export default DetailProduct;
+  
