@@ -2,10 +2,11 @@
   "name": "backend",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
+    "beautifull": "prettier --single-quote --trailing-comma all --write src/**/*.{js,json}",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon index.js"
+    "start": "nodemon --inspect src/index.js"
   },
   "repository": {
     "type": "git",
@@ -24,7 +25,14 @@
     "nodemon": "^2.0.15",
     "validator": "^13.7.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "husky": "^7.0.4",
+    "lint-staged": "^12.3.7",
+    "prettier": "^2.6.2"
+  },
+  "lint-staged": {
+    "**/*": "prettier --write --ignore-unknown"
+  },
   "keywords": [
     "Nodejs",
     "mongodb"
