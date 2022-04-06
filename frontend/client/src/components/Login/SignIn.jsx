@@ -51,7 +51,7 @@ function SignIn(props) {
 		e.preventDefault();
 		const validUser = checkFieldUser(objUser.name, objUser.password);
 		if (validUser.isValid) {
-			console.log('submit value', objUser);
+			console.log('submit value form Đăng nhập', objUser);
 		} else {
 			if (!validUser.arrNumberValid[0]) {
 				setValidName(true);

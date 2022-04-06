@@ -87,7 +87,7 @@ function SignUp(props) {
 			objSignUpUser.password
 		);
 		if (validUser.isValid) {
-			console.log('submit value', objSignUpUser);
+			console.log('submit value form đăng kí', objSignUpUser);
 		} else {
 			if (validUser.arrNumberValid.includes(0)) {
 				console.log('invalid Email');
