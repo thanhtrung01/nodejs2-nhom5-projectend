@@ -1,5 +1,5 @@
 const initialUser = {
-	isLogin: false,
+	isLogin: true,
 };
 
 const cartReducer = (state = initialUser, action) => {
