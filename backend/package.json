@@ -1,5 +1,5 @@
 {
-  "name": "server",
+  "name": "backend",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -9,14 +9,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Tinh1004/nodeJS_2_Quan_ly_mon_an.git"
+    "url": "git+https://github.com/thanhtrung01/nodejs2-nhom5-projectend.git"
   },
-  "author": "",
+  "author": "thanhtrung01",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/Tinh1004/nodeJS_2_Quan_ly_mon_an/issues"
-  },
-  "homepage": "https://github.com/Tinh1004/nodeJS_2_Quan_ly_mon_an#readme",
   "dependencies": {
     "bcrypt": "^5.0.1",
     "body-parser": "^1.19.2",
@@ -27,5 +23,10 @@
     "mongoose": "^6.2.4",
     "nodemon": "^2.0.15",
     "validator": "^13.7.0"
-  }
+  },
+  "devDependencies": {},
+  "keywords": [
+    "Nodejs",
+    "mongodb"
+  ]
 }
