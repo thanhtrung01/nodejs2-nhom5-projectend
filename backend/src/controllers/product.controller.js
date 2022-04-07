@@ -1,80 +1,113 @@
-const User = require('../models/product.model');
-const mongoose = require('mongoose');
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
+const Product = require("../models/Product");
 
-const product = {
-//   getEmailProducts: async (req, res) => {
-//     try {
-//       const products = await User.find()
-//         .select('email password')
-//         .where('email')
-//         .sort('-createdAt');
-//       return res.status(200).json(products);
-//     } catch (err) {
-//       console.log(err);
-//       return res.status(500).json({ msg: err.message });
-//     }
-//   },
-  getProducts: async (req, res) => {
-    try {
-      const products = await User.find().sort('-createdAt');
-      return res.status(200).json(products);
-    } catch (err) {
-      console.log(err);
-      return res.status(500).json({ msg: err.message });
-    }
-  },
-  getProduct: async (req, res) => {
-    try {
-      const UserId = req.user;
-      var id = mongoose.Types.ObjectId(UserId);
-      const product = await User.findById(id);
-      return res.status(200).json(product);
-    } catch (err) {
-      console.log(err);
-      return res.status(500).json({ msg: err.message });
-    }
-  },
-  createProduct: async (req, res) => {
-    const passwordHash = await bcrypt.hash(req.body.password, 12);
-    const newProduct = new User({ ...req.body, password: passwordHash });
-    const refresh_token = createAccessToken({ id: newProduct._id });
-    try {
-      const savedProduct = await newProduct.save();
-      res.status(200).json({ refresh_token });
-    } catch (err) {
-      console.log(err);
-      res.status(500).json(err);
-    }
-  },
-  updateProduct: async (req, res) => {
-    try {
-      const id = req.params.id;
-      const product = await User.findById(id);
+const CTRL = {};
 
-      const newProduct = await product.updateOne({ $set: req.body });
-      res.status(200).json(newProduct);
-    } catch (err) {
-      console.log(err);
-      return res.status(500).json({ msg: err.message });
-    }
-  },
-  deleteProduct: async (req, res) => {
-    try {
-      const product = await User.findById(req.params.id);
-      await product.deleteOne();
-      res.status(200).json(product);
-    } catch (err) {
-      res.status(500).json(err);
-    }
-  },
+//Lấy dữ liệu sản phẩm từ trường thư mực
+CTRL.getProducts = (req, res) => {
+  Product.find({})
+    .populate("category")
+    .exec((err, products) => {
+      if (err) {
+        return res.status(500).json({
+          ok: false,
+          err
+        })
+      }
+      res.json({
+        ok: true,
+        products,
+      });
+    });
 };
 
-const createAccessToken = (payload) => {
-  return jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET, {
-    expiresIn: '7d',
+//Lấy dữ liệu sản phẩm từ id thư mực
+CTRL.getProduct = (req, res) => {
+  const { productId } = req.params;
+  Product.findById(productId)
+    .populate("category")
+    .exec((err, product) => {
+      if (err) {
+        return res.status(500).json({
+          ok: false,
+          err
+        })
+      }
+      res.json({
+        ok: true,
+        product,
+      });
+    });
+};
+
+//Tạo mới sản phẩm
+CTRL.createProduct = (req, res) => {
+  const newProduct = new Product({
+    code: req.body.code,
+    name: req.body.name,
+    excerpt: req.body.excerpt,
+    description: req.body.description,
+    price: req.body.price,
+    stock: req.body.stock,
+    image: req.body.image,
+    category: req.body.category,
+    status: req.body.status
+  });
+
+  newProduct.save((err, product) => {
+    if (err) {
+      return res.status(500).json({
+        ok: false,
+        err,
+      });
+    }
+
+    return res.status(201).json({
+      ok: true,
+      product,
+    });
   });
 };
 
-module.exports = product;
+// Cập nhật sản phẩm
+CTRL.updateProduct = (req, res) => {
+  const { productId } = req.params;
+  
+  Product.findByIdAndUpdate(
+    productId,
+    req.body,
+    { new: true },
+    (err, product) => {
+      if (err) {
+        return res.status(500).json({
+          ok: false,
+          err,
+        });
+      }
+
+      return res.status(201).json({
+        ok: true,
+        product,
+      });
+    }
+  );
+};
+
+//Xóa sản phẩm
+CTRL.deleteProduct = (req, res) => {
+  const { productId } = req.params;
+  Product.findByIdAndRemove(productId, (err, product) => {
+    if (err) {
+      return res.status(500).json({
+        ok: false,
+        err,
+      });
+    }
+
+    return res.status(201).json({
+      ok: true,
+      product,
+    });
+  });
+};
+
+module.exports = CTRL;
