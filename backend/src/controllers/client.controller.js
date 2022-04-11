@@ -1,4 +1,4 @@
-const Client = require("../models/Client");
+const Client = require('../models/Client');
 
 const CTRL = {};
 
@@ -7,8 +7,8 @@ CTRL.getClients = (req, res) => {
     if (err) {
       return res.status(500).json({
         ok: false,
-        err
-      })
+        err,
+      });
     }
     res.json({
       ok: true,
@@ -23,8 +23,8 @@ CTRL.getClient = (req, res) => {
     if (err) {
       return res.status(500).json({
         ok: false,
-        err
-      })
+        err,
+      });
     }
     res.json({
       ok: true,
@@ -39,7 +39,7 @@ CTRL.createClient = (req, res) => {
     address: req.body.address,
     phone: req.body.phone,
     email: req.body.email,
-    status: req.body.status
+    status: req.body.status,
   });
 
   newClient.save((err, client) => {
@@ -59,25 +59,20 @@ CTRL.createClient = (req, res) => {
 
 CTRL.updateClient = (req, res) => {
   const { clientId } = req.params;
-  
-  Client.findByIdAndUpdate(
-    clientId,
-    req.body,
-    { new: true },
-    (err, client) => {
-      if (err) {
-        return res.status(500).json({
-          ok: false,
-          err,
-        });
-      }
 
-      return res.status(201).json({
-        ok: true,
-        client,
+  Client.findByIdAndUpdate(clientId, req.body, { new: true }, (err, client) => {
+    if (err) {
+      return res.status(500).json({
+        ok: false,
+        err,
       });
     }
-  );
+
+    return res.status(201).json({
+      ok: true,
+      client,
+    });
+  });
 };
 
 CTRL.deleteClient = (req, res) => {

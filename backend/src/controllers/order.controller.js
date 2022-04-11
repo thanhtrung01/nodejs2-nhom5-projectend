@@ -1,18 +1,18 @@
-const Order = require("../models/Order");
-const Product = require("../models/Product");
+const Order = require('../models/Order');
+const Product = require('../models/Product');
 
 const CTRL = {};
 //Lấy dữ liệu đơn hàng từ người dùng
 CTRL.getOrders = (req, res) => {
   Order.find({})
-    .populate("client")
-    .populate("orderItems.product")
+    .populate('client')
+    .populate('orderItems.product')
     .exec((err, orders) => {
       if (err) {
         return res.status(500).json({
           ok: false,
-          err
-        })
+          err,
+        });
       }
       res.json({
         ok: true,
@@ -28,8 +28,8 @@ CTRL.getOrder = (req, res) => {
     if (err) {
       return res.status(500).json({
         ok: false,
-        err
-      })
+        err,
+      });
     }
     res.json({
       ok: true,
@@ -44,7 +44,7 @@ CTRL.createOrder = (req, res) => {
     if (cartItems == false) {
       return res.status(500).json({
         ok: false,
-        msg: "The product is not available at the moment.",
+        msg: 'The product is not available at the moment.',
       });
     }
 
@@ -100,7 +100,7 @@ const validateStock = (products, cb) => {
   });
 
   Product.find({})
-    .where("_id")
+    .where('_id')
     .in(products_id)
     .exec(async (err, data) => {
       for (const e of data) {
@@ -118,7 +118,7 @@ const validateStock = (products, cb) => {
             });
           }
 
-          console.log(cartItems)
+          console.log(cartItems);
         }
       }
 

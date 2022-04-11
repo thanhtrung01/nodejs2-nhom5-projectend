@@ -1,10 +1,10 @@
-const config = require("../../config/config");
-const User = require("../../models/User");
+const config = require('../../config/config');
+const User = require('../../models/User');
 
 const CTRL = {};
 
-const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 //Đăng nhập tài khoản
 CTRL.login = (req, res) => {
@@ -19,19 +19,19 @@ CTRL.login = (req, res) => {
     if (!user) {
       return res.status(404).json({
         ok: false,
-        msg: "email/Password invalid!",
+        msg: 'email/Password invalid!',
       });
     }
 
     if (!bcrypt.compareSync(req.body.password, user.password)) {
       return res.status(404).json({
         ok: false,
-        msg: "email/Password invalid!",
+        msg: 'email/Password invalid!',
       });
     }
 
     let token = jwt.sign({ data: user }, config.ACCESS_TOKEN_SECRET, {
-      expiresIn: "2h",
+      expiresIn: '2h',
     });
 
     return res.status(201).json({
@@ -54,14 +54,49 @@ CTRL.register = async (req, res) => {
     console.log(err);
     res.status(500).json(err, {
       ok: false,
-      msg: "Passwords with letters and characters greater than 8!",
+      msg: 'Passwords with letters and characters greater than 8!',
     });
+  }
+};
+
+//Quên mật khẩu
+CTRL.resetPassword = async (req, res) => {
+  try {
+    const { password } = req.body;
+    const passwordHash = await bcrypt.hash(password, 12);
+
+    await User.findOneAndUpdate(
+      { _id: req.user.id },
+      {
+        password: passwordHash,
+      },
+    );
+    res.status(200).json({
+      msg: 'Password successfully changed!',
+    });
+  } catch (error) {
+    return res.status(500).json({ msg: error.message });
+  }
+};
+
+CTRL.logout = async (req, res) => {
+  try {
+    res.clearCookie('refreshtoken', {
+      path: '/api/auth/refresh_token',
+      httpOnly: true,
+    });
+
+    return res.status(200).json({
+      msg: 'Logged out!',
+    });
+  } catch (error) {
+    return res.status(500).json({ msg: error.message });
   }
 };
 
 const createAccessToken = (payload) => {
   return jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET, {
-    expiresIn: '7d',
+    expiresIn: '10s',
   });
 };
 

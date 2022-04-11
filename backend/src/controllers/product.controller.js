@@ -1,17 +1,17 @@
-const Product = require("../models/Product");
+const Product = require('../models/Product');
 
 const CTRL = {};
 
 //Lấy dữ liệu sản phẩm từ trường thư mực
 CTRL.getProducts = (req, res) => {
   Product.find({})
-    .populate("category")
+    .populate('category')
     .exec((err, products) => {
       if (err) {
         return res.status(500).json({
           ok: false,
-          err
-        })
+          err,
+        });
       }
       res.json({
         ok: true,
@@ -24,13 +24,13 @@ CTRL.getProducts = (req, res) => {
 CTRL.getProduct = (req, res) => {
   const { productId } = req.params;
   Product.findById(productId)
-    .populate("category")
+    .populate('category')
     .exec((err, product) => {
       if (err) {
         return res.status(500).json({
           ok: false,
-          err
-        })
+          err,
+        });
       }
       res.json({
         ok: true,
@@ -43,14 +43,14 @@ CTRL.getProduct = (req, res) => {
 CTRL.createProduct = (req, res) => {
   const newProduct = new Product({
     code: req.body.code,
-    name: req.body.name,
+    title: req.body.title,
     excerpt: req.body.excerpt,
     description: req.body.description,
     price: req.body.price,
     stock: req.body.stock,
     image: req.body.image,
-    category: req.body.category,
-    status: req.body.status
+    idCategory: req.body.idCategory,
+    status: req.body.status,
   });
 
   newProduct.save((err, product) => {
@@ -71,7 +71,7 @@ CTRL.createProduct = (req, res) => {
 // Cập nhật sản phẩm
 CTRL.updateProduct = (req, res) => {
   const { productId } = req.params;
-  
+
   Product.findByIdAndUpdate(
     productId,
     req.body,
@@ -88,7 +88,7 @@ CTRL.updateProduct = (req, res) => {
         ok: true,
         product,
       });
-    }
+    },
   );
 };
 

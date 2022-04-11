@@ -1,4 +1,4 @@
-const Role = require("../models/Role");
+const Role = require('../models/Role');
 
 const CTRL = {};
 
@@ -7,8 +7,8 @@ CTRL.getRoles = (req, res) => {
     if (err) {
       return res.status(500).json({
         ok: false,
-        err
-      })
+        err,
+      });
     }
     res.json({
       ok: true,
@@ -23,8 +23,8 @@ CTRL.getRole = (req, res) => {
     if (err) {
       return res.status(500).json({
         ok: false,
-        err
-      })
+        err,
+      });
     }
     res.json({
       ok: true,
@@ -36,7 +36,7 @@ CTRL.getRole = (req, res) => {
 CTRL.createRole = (req, res) => {
   const newRole = new Role({
     name: req.body.name,
-    status: req.body.status
+    status: req.body.status,
   });
 
   newRole.save((err, role) => {
@@ -55,26 +55,21 @@ CTRL.createRole = (req, res) => {
 };
 
 CTRL.updateRole = (req, res) => {
-  const { roleId } = req.params
+  const { roleId } = req.params;
 
-  Role.findByIdAndUpdate(
-    roleId,
-    req.body,
-    { new: true },
-    (err, role) => {
-      if (err) {
-        return res.status(500).json({
-          ok: false,
-          err,
-        });
-      }
-
-      return res.status(201).json({
-        ok: true,
-        role,
+  Role.findByIdAndUpdate(roleId, req.body, { new: true }, (err, role) => {
+    if (err) {
+      return res.status(500).json({
+        ok: false,
+        err,
       });
     }
-  );
+
+    return res.status(201).json({
+      ok: true,
+      role,
+    });
+  });
 };
 
 CTRL.deleteRole = (req, res) => {

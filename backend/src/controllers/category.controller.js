@@ -1,4 +1,4 @@
-const Category = require("../models/Category");
+const Category = require('../models/Category');
 
 const CTRL = {};
 
@@ -7,8 +7,8 @@ CTRL.getCategories = (req, res) => {
     if (err) {
       return res.status(500).json({
         ok: false,
-        err
-      })
+        err,
+      });
     }
     res.json({
       ok: true,
@@ -23,8 +23,8 @@ CTRL.getCategory = (req, res) => {
     if (err) {
       return res.status(500).json({
         ok: false,
-        err
-      })
+        err,
+      });
     }
     res.json({
       ok: true,
@@ -35,10 +35,9 @@ CTRL.getCategory = (req, res) => {
 
 CTRL.createCategory = (req, res) => {
   const newCategory = new Category({
-    name: req.body.name,
-    description: req.body.description,
-    status: req.body.status
-  })
+    nameCategory: req.body.nameCategory,
+    status: req.body.status,
+  });
 
   console.log(newCategory);
   newCategory.save((err, category) => {
@@ -57,8 +56,8 @@ CTRL.createCategory = (req, res) => {
 };
 
 CTRL.updateCategory = (req, res) => {
-  const { categoryId } = req.params;  
-  
+  const { categoryId } = req.params;
+
   Category.findByIdAndUpdate(
     categoryId,
     req.body,
@@ -75,7 +74,7 @@ CTRL.updateCategory = (req, res) => {
         ok: true,
         category,
       });
-    }
+    },
   );
 };
 
