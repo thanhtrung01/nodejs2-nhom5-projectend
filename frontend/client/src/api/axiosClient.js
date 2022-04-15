@@ -2,11 +2,13 @@ import axios from 'axios';
 import queryString from 'query-string';
 
 const axiosClient = axios.create({
-	baseURL: process.env.REACT_APP_API_URL,
+	baseURL: 'http://localhost:5000/api/v1',
 	headers: {
 		'content-type': 'application/json',
 	},
-	paramsSerializer: (params) => queryString.stringify(params),
+	paramsSerializer: (params) => {
+		return queryString.stringify(params);
+	},
 });
 
 axiosClient.interceptors.request.use(async (config) => {
