@@ -40,4 +40,4 @@ function Profile(props) {
 
 Profile.propTypes = {};
 
-export default Profile;
+export default Profile
