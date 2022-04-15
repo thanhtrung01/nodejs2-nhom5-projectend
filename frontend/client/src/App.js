@@ -11,29 +11,28 @@ import {
 import ProfilePage from './pages/ProfilePage';
 import CartPage from './pages/CartPage';
 import LoginPage from './pages/LoginPage';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import DetailProductPage from './pages/DetailProductPage';
+import NavBar from './components/Navbar/NavBar';
+import { useSelector } from 'react-redux';
 
 function App() {
-	const [isLogin, setIsLogin] = useState(true);
-	return isLogin ? (
+	const [login, setLogin] = useState(true);
+	const isLogin = useSelector((state) => state.user.isLogin);
+	useEffect(() => {
+		// console.log(isLogin);
+		setLogin(isLogin);
+	}, [isLogin]);
+
+	return login ? (
 		<div>
 			<Router>
 				<div>
-					<ul>
-						<li>
-							<Link to="/">Home</Link>
-						</li>
-						<li>
-							<Link to="/cart">Cart</Link>
-						</li>
-						<li>
-							<Link to="/profile">Profile</Link>
-						</li>
-					</ul>
+					<NavBar />
+
 					<Switch>
 						<Route exact path="/login">
-							{isLogin ? (
+							{login ? (
 								<Redirect from="/login" to="/" />
 							) : (
 								<Redirect from="/login" to="/login" />
@@ -59,7 +58,7 @@ function App() {
 		<Router>
 			<Switch>
 				<Route exact path="/">
-					{isLogin ? (
+					{login ? (
 						<Redirect to="/" />
 					) : (
 						<Redirect from="/" to="/login" />

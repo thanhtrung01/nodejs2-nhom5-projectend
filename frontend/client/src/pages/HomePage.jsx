@@ -1,12 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import Home from '../components/HomePage/Home';
 
 function HomePage(props) {
 	return (
 		<div>
-			Hello home
-			<Link to="/detail-product">Detail product</Link>
+			<Home />
+			{/* <Link to="/detail-product">Detail product</Link> */}
 		</div>
 	);
 }

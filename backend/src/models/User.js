@@ -1,18 +1,34 @@
 const mongoose = require('mongoose');
 const validator = require('validator');
+const Schema = mongoose.Schema;
 
-const UserSchema = new mongoose.Schema(
+const UserSchema = new Schema(
   {
-    name: {
+    lastName: {
+      type: String,
+    },
+    fistName: {
+      type: String,
+    },
+    address: {
+      type: String,
+    },
+    username: {
       type: String,
       required: true,
-      trim: true,
+      min: 3,
+      max: 20,
+      unique: true,
+    },
+    phone: {
+      type: String,
     },
     email: {
       type: String,
       required: true,
       unique: true,
       trim: true,
+      max: 50,
       lowercase: true,
       validate(value) {
         if (!validator.isEmail(value)) {
@@ -34,20 +50,36 @@ const UserSchema = new mongoose.Schema(
       },
       private: true, // used by the toJSON plugin
     },
-    role: {
-      // type: String,
-      type: Boolean,
-      // enum: roles,
-      
-      default: 'user',
+    age: {
+      type: Number,
     },
-    // isEmailVerified: {
-    //   type: Boolean,
-    //   default: false,
-    // },
+    gender: {
+      type: String,
+      enum: ['male', 'female'],
+    },
+    avatar: {
+      type: String,
+      maxlength: 600,
+    },
+    isAdmin: {
+      type: Number,
+      default: 0,
+    },
+    role: {
+      type: Boolean,
+      default: false,
+    },
+    created_at: {
+      type: Date,
+      default: Date.now,
+    },
+    update_at: {
+      type: Date,
+      default: Date.now,
+    },
   },
   {
-    timestamps: true,
+    timestamp: true,
   },
 );
 
