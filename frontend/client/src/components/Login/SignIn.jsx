@@ -1,21 +1,27 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import userApi from '../../api/userApi';
+import { useDispatch } from 'react-redux';
+import { signInUser } from '../../actions/user';
 
 function SignIn(props) {
 	const { handleChangeForm } = props;
+	const dispatch = useDispatch();
 	const [objUser, setObjUser] = useState({
-		name: '',
+		email: '',
 		password: '',
 	});
 	const [validName, setValidName] = useState(false);
+	const [userLogin, setUserLogin] = useState({});
 	const [validPassword, setValidPassword] = useState(false);
+	const [foundUser, setFoundUser] = useState(true);
 	const [isHiddenPassword, setIsHiddenPassword] = useState(false);
 
-	const checkFieldUser = (name, password) => {
+	const checkFieldUser = () => {
 		let isValid = true;
 		const arrNumberValid = [];
 
-		const arrValidateUser = ['name', 'password'];
+		const arrValidateUser = ['email', 'password'];
 		for (let i = 0; i < arrValidateUser.length; i++) {
 			if (!objUser[arrValidateUser[i]]) {
 				isValid = false;
@@ -31,12 +37,13 @@ function SignIn(props) {
 	};
 
 	const handleObjUser = (e, fieldInput) => {
+		setFoundUser(true);
 		if (fieldInput === 'email') {
 			setValidName(false);
 
 			setObjUser((prev) => ({
 				...prev,
-				name: e.target.value,
+				email: e.target.value,
 			}));
 		} else {
 			setValidPassword(false);
@@ -49,9 +56,11 @@ function SignIn(props) {
 
 	const handleSubmitForm = (e) => {
 		e.preventDefault();
-		const validUser = checkFieldUser(objUser.name, objUser.password);
+		const validUser = checkFieldUser();
 		if (validUser.isValid) {
-			console.log('submit value form Đăng nhập', objUser);
+			// console.log('submit value form đăng nhập', objUser);
+			// login
+			loginUser();
 		} else {
 			if (!validUser.arrNumberValid[0]) {
 				setValidName(true);
@@ -63,11 +72,24 @@ function SignIn(props) {
 		}
 	};
 
-	// console.log('validName', validName);
+	const loginUser = async () => {
+		try {
+			const newObjUser = { ...objUser };
+			const response = await userApi.loginUser({
+				...newObjUser,
+			});
+			setUserLogin(response.user);
+			dispatch(signInUser(response.user));
+		} catch (error) {
+			console.log('Faild to login user: ', error);
+			setFoundUser(false);
+		}
+	};
 
 	const handleHiddenPassword = (e) => {
 		setIsHiddenPassword(!isHiddenPassword);
 	};
+	// console.log(userLogin);
 
 	return (
 		<div className="sign-in">
@@ -82,7 +104,7 @@ function SignIn(props) {
 						type="text"
 						id="input-name"
 						placeholder="Tên đăng nhập"
-						value={objUser.name}
+						value={objUser.email}
 						onChange={(e) => handleObjUser(e, 'email')}
 					/>
 					<i className="fa-solid fa-user form-icon"></i>
@@ -104,6 +126,13 @@ function SignIn(props) {
 						value={objUser.password}
 						onChange={(e) => handleObjUser(e, 'password')}
 					/>
+					{foundUser ? (
+						''
+					) : (
+						<p className="input-valid">
+							Không tìm thấy tài khoản của bạn
+						</p>
+					)}
 					{validPassword ? (
 						<p className="input-valid">Vui lòng nhập trường này</p>
 					) : (

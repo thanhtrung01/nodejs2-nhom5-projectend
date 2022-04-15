@@ -1,13 +1,19 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import userApi from '../../api/userApi';
+import { useDispatch } from 'react-redux';
+import { createUser } from '../../actions/user';
 
 function SignUp(props) {
 	const { handleChangeForm } = props;
+	const dispatch = useDispatch();
+
 	const [objSignUpUser, setObjSignUpUser] = useState({
 		email: '',
-		name: '',
+		username: '',
 		password: '',
 		passwordAgain: '',
+		status: true,
 	});
 	const [validEmail, setValidEmail] = useState(false);
 	const [validName, setValidName] = useState(false);
@@ -34,11 +40,11 @@ function SignUp(props) {
 					email: e.target.value,
 				});
 				break;
-			case 'name':
+			case 'username':
 				setValidName(false);
 				setObjSignUpUser({
 					...objSignUpUser,
-					name: e.target.value,
+					username: e.target.value,
 				});
 				break;
 			case 'password':
@@ -61,11 +67,16 @@ function SignUp(props) {
 	};
 	console.log('Current Obj', objSignUpUser);
 
-	const checkFieldUser = (email, name, password, passwordAgain) => {
+	const checkFieldUser = (email, username, password, passwordAgain) => {
 		let isValid = true;
 		const arrNumberValid = [];
 
-		const arrValidateUser = ['email', 'name', 'password', 'passwordAgain'];
+		const arrValidateUser = [
+			'email',
+			'username',
+			'password',
+			'passwordAgain',
+		];
 		for (let i = 0; i < arrValidateUser.length; i++) {
 			if (!objSignUpUser[arrValidateUser[i]]) {
 				isValid = false;
@@ -83,29 +94,49 @@ function SignUp(props) {
 	const handleSignUpUser = (e) => {
 		e.preventDefault();
 		const validUser = checkFieldUser(
-			objSignUpUser.name,
+			objSignUpUser.username,
 			objSignUpUser.password
 		);
 		if (validUser.isValid) {
-			console.log('submit value form đăng kí', objSignUpUser);
+			fetchUserList();
+			console.log('objSignUpUser', objSignUpUser);
+
+			dispatch(createUser(objSignUpUser));
+
+			// reset form
+			setObjSignUpUser({
+				email: '',
+				username: '',
+				password: '',
+				passwordAgain: '',
+			});
 		} else {
 			if (validUser.arrNumberValid.includes(0)) {
 				console.log('invalid Email');
 				setValidEmail(true);
-				// setValidName(true);
 			}
 			if (validUser.arrNumberValid.includes(1)) {
-				// console.log('invalid name');
 				setValidName(true);
 			}
 			if (validUser.arrNumberValid.includes(2)) {
-				// 	console.log('invalid password');
 				setValidPassword(true);
 			}
 			if (validUser.arrNumberValid.includes(3)) {
-				// console.log('invalid passwordAgain');
 				setValidPasswordAgain(true);
 			}
+		}
+	};
+
+	const fetchUserList = async () => {
+		try {
+			const newObjUser = { ...objSignUpUser };
+			delete newObjUser.passwordAgain;
+			const response = await userApi.createUser({
+				...newObjUser,
+			});
+			console.log('response', response);
+		} catch (error) {
+			console.log('Faild to fetch user list: ', error);
 		}
 	};
 
@@ -134,15 +165,15 @@ function SignUp(props) {
 				</div>
 				<div className="form-input">
 					<label htmlFor="input-name" className="input-name">
-						Tên đăng nhập:
+						Họ và tên:
 					</label>
 					<input
 						className="input-text"
 						type="text"
 						id="input-name"
-						placeholder="Tên đăng nhập"
-						value={objSignUpUser.name}
-						onChange={(e) => handleValueUser(e, 'name')}
+						placeholder="Họ và tên"
+						value={objSignUpUser.username}
+						onChange={(e) => handleValueUser(e, 'username')}
 					/>
 					{validName ? (
 						<p className="input-valid">Vui lòng nhập trường này</p>
