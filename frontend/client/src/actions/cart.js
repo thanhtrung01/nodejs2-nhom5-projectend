@@ -18,3 +18,24 @@ export const updateProductToCart = (id) => {
 		payload: id,
 	};
 };
+
+export const reduceProductToCart = (id) => {
+	return {
+		type: 'REDUCE_PRODUCT_TO_CART',
+		payload: id,
+	};
+};
+
+export const deleteProductToCart = (id) => {
+	return {
+		type: 'DELETE_PRODUCT_TO_CART',
+		payload: id,
+	};
+};
+
+export const deleteAllProductToCart = () => {
+	return {
+		type: 'DELETE_ALL_PRODUCT_TO_CART',
+		// payload: id,
+	};
+};

@@ -7,6 +7,7 @@ import './navbar.scss';
 import { useSelector, useDispatch } from 'react-redux';
 import { setLogin } from '../../actions/user';
 import product7 from '../../assets/images/product7.jpg';
+import { deleteProductToCart } from '../../actions/cart';
 
 const navbarList = [
 	{
@@ -53,6 +54,10 @@ function NavBar(props) {
 		}
 	};
 
+	const handleDeleteItemProduct = (index) => {
+		dispatch(deleteProductToCart(index));
+	};
+
 	return status ? (
 		<div className="nav-bar">
 			<div className="nav-wrap">
@@ -88,54 +93,69 @@ function NavBar(props) {
 						<div className="cart-list-to-buy">
 							<div className="buy-header">Sản phẩm đã thêm </div>
 							<div className="buy-container">
-								{listProductToBuy.map((itemProduct, index) => {
-									const {
-										title,
-										idCategory,
-										price,
-										quantityToBuy,
-										imageProduct,
-									} = itemProduct;
-									return (
-										<div className="buy-item" key={index}>
-											<div className="item-img">
-												{product7 && (
-													<img
-														src={imageProduct}
-														alt=""
-														width="40"
-													/>
-												)}
+								{listProductToBuy.map(
+									(itemProduct, indexProduct) => {
+										const {
+											title,
+											idCategory,
+											price,
+											quantityToBuy,
+											imageProduct,
+											index,
+										} = itemProduct;
+										return (
+											<div
+												className="buy-item"
+												key={indexProduct}
+											>
+												<div className="item-img">
+													{product7 && (
+														<img
+															src={imageProduct}
+															alt=""
+															width="40"
+														/>
+													)}
+												</div>
+												<div className="item-name">
+													<p className="name-product">
+														{title}
+													</p>
+													<p className="name-category">
+														Phân loại hàng:{' '}
+														{
+															idCategory.nameCategory
+														}
+													</p>
+												</div>
+												<div className="item-quantity">
+													<p className="item-price">
+														<span>
+															{price
+																.toString()
+																.replace(
+																	/\B(?=(\d{3})+(?!\d))/g,
+																	'.'
+																)}{' '}
+															₫{' '}
+														</span>{' '}
+														x {quantityToBuy}
+													</p>
+													<p
+														className="item-delete"
+														onClick={() =>
+															handleDeleteItemProduct(
+																index
+															)
+														}
+													>
+														Xóa
+													</p>
+												</div>
 											</div>
-											<div className="item-name">
-												<p className="name-product">
-													{title}
-												</p>
-												<p className="name-category">
-													Phân loại hàng:{' '}
-													{idCategory.nameCategory}
-												</p>
-											</div>
-											<div className="item-quantity">
-												<p className="item-price">
-													<span>
-														{price
-															.toString()
-															.replace(
-																/\B(?=(\d{3})+(?!\d))/g,
-																'.'
-															)}{' '}
-														₫{' '}
-													</span>{' '}
-													x {quantityToBuy}
-												</p>
-												<p className="item-delete">
-													Xóa
-												</p>
-											</div>
-										</div>
-									);
-								})}
+										);
+									}
+								)}
 
 								{/* <div className="buy-item">
 									<div className="item-img">
