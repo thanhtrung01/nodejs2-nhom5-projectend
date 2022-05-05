@@ -28,6 +28,7 @@ import 'swiper/css/scrollbar';
 
 import { Link } from 'react-router-dom';
 import ProductItem from '../ProductItem/ProductItem';
+import productApi from '../../api/productApi';
 
 const swiperOptions = {
 	direction: 'horizontal',
@@ -137,18 +138,21 @@ const productList = [
 function Home(props) {
 	const navigationPrevRef = useRef();
 	const navigationNextRef = useRef();
+	const [products, setProducts] = useState([]);
 
 	useEffect(() => {
-		const fetchUserList = async () => {
+		const getAllProductApi = async () => {
 			try {
-				const response = await userApi.getAll();
-				console.log('response', response);
+				const response = await productApi.getAll();
+				setProducts(response.products);
 			} catch (error) {
 				console.log('Faild to fetch user list: ', error);
 			}
 		};
-		fetchUserList();
+		getAllProductApi();
 	}, []);
+
+	// console.log('products', products);
 
 	return (
 		<div className="home">
@@ -271,8 +275,8 @@ function Home(props) {
 			<div className="header-product">Gợi ý hôm nay</div>
 
 			<div className="home-product">
-				{productList.map((productItem, index) => (
-					<ProductItem key={index} {...productItem} />
+				{products.map((productItem, index) => (
+					<ProductItem key={index} index={index} {...productItem} />
 				))}
 			</div>
 		</div>

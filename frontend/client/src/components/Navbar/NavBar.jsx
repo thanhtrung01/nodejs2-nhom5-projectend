@@ -6,6 +6,7 @@ import userImg from '../../assets/images/dog-cat-eat.jpg';
 import './navbar.scss';
 import { useSelector, useDispatch } from 'react-redux';
 import { setLogin } from '../../actions/user';
+import product7 from '../../assets/images/product7.jpg';
 
 const navbarList = [
 	{
@@ -28,8 +29,8 @@ function NavBar(props) {
 	const { username } = user;
 
 	const listProductToBuy = useSelector((state) => state.cart);
-	const [productToBuy1, productToBuy2] = listProductToBuy;
-	const { imageUrl, title, category, quantityToBuy, price } = productToBuy1;
+
+	console.log('listProductToBuy', listProductToBuy);
 
 	const [isActive, setIsActive] = useState(0);
 	const [hiddenSetting, setHiddenSetting] = useState(false);
@@ -50,11 +51,6 @@ function NavBar(props) {
 		} else {
 			setHiddenSetting(!hiddenSetting);
 		}
-		// if (e.type === 'mouseover') {
-		// 	setHiddenSetting(true);
-		// } else {
-		// 	setHiddenSetting(false);
-		// }
 	};
 
 	return status ? (
@@ -92,7 +88,56 @@ function NavBar(props) {
 						<div className="cart-list-to-buy">
 							<div className="buy-header">Sản phẩm đã thêm </div>
 							<div className="buy-container">
-								<div className="buy-item">
+								{listProductToBuy.map((itemProduct, index) => {
+									const {
+										title,
+										idCategory,
+										price,
+										quantityToBuy,
+										imageProduct,
+									} = itemProduct;
+									return (
+										<div className="buy-item" key={index}>
+											<div className="item-img">
+												{product7 && (
+													<img
+														src={imageProduct}
+														alt=""
+														width="40"
+													/>
+												)}
+											</div>
+											<div className="item-name">
+												<p className="name-product">
+													{title}
+												</p>
+												<p className="name-category">
+													Phân loại hàng:{' '}
+													{idCategory.nameCategory}
+												</p>
+											</div>
+											<div className="item-quantity">
+												<p className="item-price">
+													<span>
+														{price
+															.toString()
+															.replace(
+																/\B(?=(\d{3})+(?!\d))/g,
+																'.'
+															)}{' '}
+														₫{' '}
+													</span>{' '}
+													x {quantityToBuy}
+												</p>
+												<p className="item-delete">
+													Xóa
+												</p>
+											</div>
+										</div>
+									);
+								})}
+
+								{/* <div className="buy-item">
 									<div className="item-img">
 										<img src={imageUrl} alt="" width="40" />
 									</div>
@@ -154,28 +199,7 @@ function NavBar(props) {
 										</p>
 										<p className="item-delete">Xóa</p>
 									</div>
-								</div>
-								<div className="buy-item">
-									<div className="item-img">
-										<img src={imageUrl} alt="" width="40" />
-									</div>
-									<div className="item-name">
-										<p className="name-product">
-											Giày Jordan 1 High Panda, Giày Thể
-											Thao JD1 Cao Cổ Màu Đen, Da Bò Cao
-											Cấp Full Size Nam Nữ | JDD002
-										</p>
-										<p className="name-category">
-											Phân loại hàng: Bạc
-										</p>
-									</div>
-									<div className="item-quantity">
-										<p className="item-price">
-											<span>90.000 ₫ </span> x 1
-										</p>
-										<p className="item-delete">Xóa</p>
-									</div>
-								</div>
+								</div> */}
 							</div>
 							<div className="go-to-cart-wrap">
 								<Link to="/cart" className="go-to-cart">
