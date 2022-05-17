@@ -13,11 +13,9 @@ function CartContent(props) {
 	const { productToBuy } = props;
 	const dispatch = useDispatch();
 
-	const handleRiseQuantity = (index) => {
-		// const productInCart = productToBuy.find((item, index) => {
-		// 	return item.code === props.code;
-		// });
+	console.log('productToBuy', productToBuy);
 
+	const handleRiseQuantity = (index) => {
 		dispatch(updateProductToCart(index));
 	};
 
@@ -102,48 +100,6 @@ function CartContent(props) {
 					</div>
 				);
 			})}
-			{/* <div className="cart-item-to-buy">
-				<div className="item-image">
-					<img
-						className="product-image"
-						width="80"
-						src={product6}
-						alt=""
-					/>
-					<p className="product-title">
-						Áo thun nam POLO trơn vải cá sấu cotton cao cấp ngắn tay
-						cực sang trọng vải cá sấu cotton cao cấp ngắn tay cực
-						sang trọng
-					</p>
-					<p className="product-category">Phân loại hàng: Bạc</p>
-				</div>
-				<div className="item-info">
-					<div className="item-wrap">
-						<div className="item-price item-info-detail">
-							₫65.999
-						</div>
-					</div>
-					<div className="item-wrap">
-						<div className="item-quantity item-info-detail">
-							<button>-</button>
-							<input
-								className="quantity-input"
-								type="text"
-								value="1"
-							/>
-							<button>+</button>
-						</div>
-					</div>
-					<div className="item-wrap">
-						<div className="item-totalPrice item-info-detail">
-							₫131.998
-						</div>
-					</div>
-					<div className="item-wrap">
-						<div className="item-delete item-info-detail">Xóa</div>
-					</div>
-				</div>
-			</div> */}
 		</div>
 	);
 }

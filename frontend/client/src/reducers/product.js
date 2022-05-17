@@ -1,14 +1,9 @@
-const initialProductState = [
-	{
-		id: 1,
-		value: 'Item product',
-	},
-];
+const initialProductState = [];
 
 const productReducer = (state = initialProductState, action) => {
 	switch (action.type) {
 		case 'ADD_PRODUCT':
-			return [...state, action.payload];
+			return [...state, ...action.payload];
 		default:
 			return state;
 	}

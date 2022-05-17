@@ -1,6 +1,3 @@
-import product1 from '../assets/images/product1.jpg';
-import product2 from '../assets/images/product2.jpg';
-
 const initialCart = [];
 
 const cartReducer = (state = initialCart, action) => {
@@ -53,7 +50,6 @@ const cartReducer = (state = initialCart, action) => {
 					quantityToBuy: reduceProduct.quantityToBuy - 1,
 				});
 			}
-			// console.log('newState', newState);
 
 			return [...newReduceState];
 
@@ -65,16 +61,8 @@ const cartReducer = (state = initialCart, action) => {
 			const newStateInCart = [...state];
 
 			newStateInCart.splice(indexDeleteProduct, 1);
-			console.log('running...');
-			console.log('running...', newStateInCart);
 			return [...newStateInCart];
 		case 'DELETE_ALL_PRODUCT_TO_CART':
-			// let newStateToDelete = [...state];
-			// newStateToDelete = [];
-
-			// newStateInCart.splice(indexDeleteProduct, 1);
-			// console.log('running...');
-			// console.log('running...', newStateInCart);
 			return [];
 		default:
 			return state;

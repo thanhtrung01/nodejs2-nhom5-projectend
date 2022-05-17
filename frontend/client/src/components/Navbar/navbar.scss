@@ -3,7 +3,7 @@
 	top: 0;
 	width: 100%;
 	z-index: 10000;
-	background-color: rgb(141, 229, 239);
+	background-color: #e89f90;
 	display: flex;
 
 	.nav-wrap {
@@ -45,8 +45,8 @@
 				padding: 8px 22px;
 				border-radius: 4px;
 				cursor: pointer;
-				background-color: rgb(124, 214, 239);
-				color: rgb(126, 126, 126);
+				background-color: #e89f90;
+				color: white;
 			}
 		}
 
@@ -69,6 +69,7 @@
 					white-space: nowrap;
 					overflow: hidden;
 					text-overflow: ellipsis;
+					color: white;
 				}
 				.user-img {
 					width: 40px;
@@ -87,6 +88,10 @@
 				position: relative;
 				cursor: pointer;
 				position: relative;
+
+				.cart-number {
+					color: white;
+				}
 
 				&::after {
 					content: '';
@@ -227,7 +232,7 @@
 				}
 
 				.cart-icon {
-					color: rgb(127, 127, 127);
+					color: white;
 					font-size: 20px;
 				}
 

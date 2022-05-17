@@ -13,6 +13,22 @@ import SwiperCore, {
 import slide1 from '../../assets/images/slide1.png';
 import slide2 from '../../assets/images/slide2.png';
 import slide3 from '../../assets/images/slide3.png';
+import categoryHome1 from '../../assets/images/category-home1.png';
+import categoryHome2 from '../../assets/images/category-home2.png';
+import categoryHome3 from '../../assets/images/category-home3.png';
+import categoryHome4 from '../../assets/images/category-home4.png';
+import categoryHome5 from '../../assets/images/category-home5.png';
+import categoryHome6 from '../../assets/images/category-home6.png';
+import categoryHome7 from '../../assets/images/category-home7.png';
+import categoryHome8 from '../../assets/images/category-home8.png';
+import categoryHome9 from '../../assets/images/category-home9.png';
+import categoryHome10 from '../../assets/images/category-home10.png';
+import categoryHome11 from '../../assets/images/category-home11.png';
+import categoryHome12 from '../../assets/images/category-home12.png';
+import categoryHome13 from '../../assets/images/category-home13.png';
+import categoryHome14 from '../../assets/images/category-home14.png';
+import categoryHome15 from '../../assets/images/category-home15.png';
+import categoryHome16 from '../../assets/images/category-home16.png';
 import product1 from '../../assets/images/product1.jpg';
 import product2 from '../../assets/images/product2.jpg';
 import product3 from '../../assets/images/product3.jpg';
@@ -29,6 +45,8 @@ import 'swiper/css/scrollbar';
 import { Link } from 'react-router-dom';
 import ProductItem from '../ProductItem/ProductItem';
 import productApi from '../../api/productApi';
+import { useDispatch } from 'react-redux';
+import { addProduct } from '../../actions/product';
 
 const swiperOptions = {
 	direction: 'horizontal',
@@ -135,16 +153,87 @@ const productList = [
 		quantity: 121,
 	},
 ];
+
+const listCategory = [
+	{
+		name: 'Thời trang nam',
+		image: categoryHome1,
+	},
+	{
+		name: 'Điện thoại & phụ kiện',
+		image: categoryHome2,
+	},
+	{
+		name: 'Thiết Bị Điện Tử',
+		image: categoryHome3,
+	},
+	{
+		name: 'Máy tính & laptop',
+		image: categoryHome4,
+	},
+	{
+		name: 'Máy ảnh & máy quay phim',
+		image: categoryHome5,
+	},
+	{
+		name: 'Đồng hồ',
+		image: categoryHome6,
+	},
+	{
+		name: 'Giày dép nam',
+		image: categoryHome7,
+	},
+	{
+		name: 'Thiết bị điện gia dụng',
+		image: categoryHome8,
+	},
+	{
+		name: 'Thời trang nữ',
+		image: categoryHome9,
+	},
+	{
+		name: 'Mẹ & bé',
+		image: categoryHome10,
+	},
+	{
+		name: 'Nhà cửa & đời sống',
+		image: categoryHome11,
+	},
+	{
+		name: 'Sắc đẹp',
+		image: categoryHome12,
+	},
+	{
+		name: 'Sức khỏe',
+		image: categoryHome13,
+	},
+	{
+		name: 'Giày dép nữ',
+		image: categoryHome14,
+	},
+	{
+		name: 'Túi ví nữ',
+		image: categoryHome15,
+	},
+	{
+		name: 'Phụ kiện & trang sức nữ',
+		image: categoryHome16,
+	},
+];
+
 function Home(props) {
 	const navigationPrevRef = useRef();
 	const navigationNextRef = useRef();
 	const [products, setProducts] = useState([]);
+
+	const dispatch = useDispatch();
 
 	useEffect(() => {
 		const getAllProductApi = async () => {
 			try {
 				const response = await productApi.getAll();
 				setProducts(response.products);
+				dispatch(addProduct(response.products));
 			} catch (error) {
 				console.log('Faild to fetch user list: ', error);
 			}
@@ -152,7 +241,7 @@ function Home(props) {
 		getAllProductApi();
 	}, []);
 
-	// console.log('products', products);
+	console.log('products', products);
 
 	return (
 		<div className="home">
@@ -183,92 +272,20 @@ function Home(props) {
 			<div className="header-category">
 				<h3 className="category-title">Danh mục sản phẩm</h3>
 				<div className="category-list">
-					<div className="category-item">
-						<Link className="category-link" to="/category">
-							<img src={product2} alt="" width="60" />
-							<p className="category-name">
-								Điện thoại và phụ kiện
-							</p>
-						</Link>
-					</div>
-					<div className="category-item">
-						<Link className="category-link" to="/category">
-							<img src={product2} alt="" width="60" />
-							<p className="category-name">
-								Điện thoại và phụ kiện
-							</p>
-						</Link>
-					</div>
-					<div className="category-item">
-						<Link className="category-link" to="/category">
-							<img src={product2} alt="" width="60" />
-							<p className="category-name">
-								Điện thoại và phụ kiện
-							</p>
-						</Link>
-					</div>
-					<div className="category-item">
-						<Link className="category-link" to="/category">
-							<img src={product2} alt="" width="60" />
-							<p className="category-name">
-								Điện thoại và phụ kiện
-							</p>
-						</Link>
-					</div>
-					<div className="category-item">
-						<Link className="category-link" to="/category">
-							<img src={product2} alt="" width="60" />
-							<p className="category-name">
-								Điện thoại và phụ kiện
-							</p>
-						</Link>
-					</div>
-					<div className="category-item">
-						<Link className="category-link" to="/category">
-							<img src={product2} alt="" width="60" />
-							<p className="category-name">
-								Điện thoại và phụ kiện
-							</p>
-						</Link>
-					</div>
-					<div className="category-item">
-						<Link className="category-link" to="/category">
-							<img src={product2} alt="" width="60" />
-							<p className="category-name">
-								Điện thoại và phụ kiện
-							</p>
-						</Link>
-					</div>
-					<div className="category-item">
-						<Link className="category-link" to="/category">
-							<img src={product2} alt="" width="60" />
-							<p className="category-name">
-								Điện thoại và phụ kiện
-							</p>
-						</Link>
-					</div>
-					<div className="category-item">
-						<Link className="category-link" to="/category">
-							<img src={product2} alt="" width="60" />
-							<p className="category-name">
-								Điện thoại và phụ kiện
-							</p>
-						</Link>
-					</div>
-					<div className="category-item">
-						<Link className="category-link" to="/category">
-							<img src={product2} alt="" width="60" />
-							<p className="category-name">
-								Điện thoại và phụ kiện
-							</p>
-						</Link>
-					</div>
-					<div className="category-item">
-						<Link className="category-link" to="/category">
-							<img src={product2} alt="" width="60" />
-							<p className="category-name">Thiết bị điện tử</p>
-						</Link>
-					</div>
+					{listCategory.map((itemCategory, index) => (
+						<div className="category-item" key={index}>
+							<Link className="category-link" to="/category">
+								<img
+									src={itemCategory.image}
+									alt=""
+									width="60"
+								/>
+								<p className="category-name">
+									{itemCategory.name}
+								</p>
+							</Link>
+						</div>
+					))}
 				</div>
 			</div>
 

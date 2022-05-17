@@ -1,27 +1,28 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import './product-item.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import { addProductToCart, updateProductToCart } from '../../actions/cart';
 
 function ProductItem(props) {
 	const {
-		index,
 		title,
 		description,
 		price,
 		priceOld,
 		imageProduct,
 		quantity,
+		slug,
 	} = props;
 
 	const dispatch = useDispatch();
 
-	// const [hiddenOrder, setHiddenOrder] = useState(false)
+	// console.log('props in product item', props);
 
 	const productToBuy = useSelector((state) => state.cart);
-	// console.log('productToBuy In ProductItem', productToBuy);
+
+	// console.log('productTobuy in 26', productToBuy);
 
 	const priceHadConvert = price
 		.toString()
@@ -44,7 +45,7 @@ function ProductItem(props) {
 
 	return (
 		<div className="product-item">
-			<Link className="link-item" to={`/detail-product/1`}>
+			<Link className="link-item" to={`/detail-product/${slug}`}>
 				<div className="product-img">
 					<img src={imageProduct} alt="" />
 				</div>

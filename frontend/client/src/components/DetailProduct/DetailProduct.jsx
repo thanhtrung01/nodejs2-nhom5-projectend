@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useParams } from 'react-router-dom';
 import './detail-product.scss';
@@ -15,20 +15,72 @@ import facebook from '../../assets/images/facebook.svg';
 import messenger from '../../assets/images/messenger.svg';
 import pinterest from '../../assets/images/pinterest.svg';
 import twitter from '../../assets/images/twitter.svg';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+	addProductToCart,
+	reduceProductToCart,
+	updateProductToCart,
+} from '../../actions/cart';
 
 import product2Main from '../../assets/images/product2-main.jpg';
 import Icon from './Icon';
 
 function DetailProduct(props) {
-	const { id } = useParams();
-	console.log('id detail product', id);
+	const { slug } = useParams();
+	const dispatch = useDispatch();
+	const [quantityDetailProduct, setQuantityDetailProduct] = useState(1);
+
+	const products = useSelector((state) => state.product);
+	const productToBuy = useSelector((state) => state.cart);
+
+	const indexItemProduct = products.findIndex(
+		(item, index) => item.slug === slug
+	);
+
+	console.log('indexItemProduct', indexItemProduct);
+
+	const itemProduct = products.find((item, index) => item.slug === slug);
+
+	const newItemProduct = { ...itemProduct, index: indexItemProduct };
+
+	console.log('newItemProduct', newItemProduct);
+
+	const { imageProduct, price, title, index } = newItemProduct;
+
+	const handleRiseQuantity = () => {
+		setQuantityDetailProduct(quantityDetailProduct + 1);
+	};
+
+	const handleReduceQuantity = () => {
+		setQuantityDetailProduct(
+			quantityDetailProduct - 1 === 0 ? 1 : quantityDetailProduct - 1
+		);
+	};
+
+	const handleOrderProduct = () => {
+		const productInCart = productToBuy.find((item, index) => {
+			return item.code === newItemProduct.code;
+		});
+
+		console.log('productInCart', productInCart);
+		if (productInCart) {
+			dispatch(updateProductToCart(productInCart.index));
+		} else {
+			dispatch(
+				addProductToCart({
+					...newItemProduct,
+					quantityToBuy: quantityDetailProduct,
+				})
+			);
+		}
+	};
 
 	return (
 		<div className="detail-product">
 			<div className="detail-product-wrap">
 				<div className="detail-product-left">
 					<div className="left-image-main">
-						<img src={product2Main} alt="" width="450" />
+						<img src={imageProduct} alt="" width="450" />
 					</div>
 					<div className="left-image-list">
 						<div className="left-image-item active">
@@ -74,14 +126,14 @@ function DetailProduct(props) {
 							</div>
 						</div>
 						<div className="left-like">
-							<svg width="24" height="20" class="_1Jj7iG">
+							<svg width="24" height="20" className="_1Jj7iG">
 								<path
 									d="M19.469 1.262c-5.284-1.53-7.47 4.142-7.47 4.142S9.815-.269 4.532 1.262C-1.937 3.138.44 13.832 12 19.333c11.559-5.501 13.938-16.195 7.469-18.07z"
 									stroke="#FF424F"
-									stroke-width="1.5"
+									strokeWidth="1.5"
 									fill="none"
-									fill-rule="evenodd"
-									stroke-linejoin="round"
+									fillRule="evenodd"
+									strokeLinejoin="round"
 								></path>
 							</svg>
 							<p className="like-number">Đã thích (2,3k)</p>
@@ -92,11 +144,7 @@ function DetailProduct(props) {
 					<div className="right-header">
 						<h3 className="header-title">
 							<span className="header-tag-like">Yêu Thích</span>
-							<span className="title-content">
-								Áo thun nam POLO trơn vải cá sấu cotton cao cấp
-								ngắn tay cực sang trọng vải cá sấu cotton cao
-								cấp ngắn tay cực sang trọng
-							</span>
+							<span className="title-content">{title}</span>
 						</h3>
 						<div className="right-review">
 							<div className="review-star">
@@ -121,8 +169,16 @@ function DetailProduct(props) {
 
 						<div className="right-price">
 							<div className="price-detail">
-								<p className="price-old">198.000 ₫</p>
-								<p className="price-current">99.000 ₫</p>
+								<p className="price-old">49.000.000 ₫</p>
+								<p className="price-current">
+									{price
+										.toString()
+										.replace(
+											/\B(?=(\d{3})+(?!\d))/g,
+											'.'
+										)}{' '}
+									₫
+								</p>
 								<span>50% GIẢM</span>
 							</div>
 							<div className="price-description">
@@ -134,17 +190,17 @@ function DetailProduct(props) {
 										<span>Gì Cũng Rẽ</span>
 										<svg
 											width="14"
-											enable-background="new 0 0 15 15"
+											enableBackground="new 0 0 15 15"
 											viewBox="0 0 15 15"
 											role="img"
-											class="stardust-icon stardust-icon-help"
+											className="stardust-icon stardust-icon-help"
 										>
 											<circle
 												cx="7.5"
 												cy="7.5"
 												fill="none"
 												r="6.5"
-												stroke-miterlimit="10"
+												strokeMiterlimit="10"
 											></circle>
 											<path
 												stroke="none"
@@ -187,15 +243,25 @@ function DetailProduct(props) {
 							<div className="number-title">Số lượng</div>
 							<div className="number-quantity">
 								<div className="quantity-wrap">
-									<button className="btn-decrease btn-item">
+									<button
+										className="btn-decrease btn-item"
+										onClick={() =>
+											handleReduceQuantity(index)
+										}
+									>
 										-
 									</button>
 									<input
-										value="1"
+										value={quantityDetailProduct}
 										type="text"
 										className="input-quantity"
 									/>
-									<button className="btn-increase btn-item">
+									<button
+										className="btn-increase btn-item"
+										onClick={() =>
+											handleRiseQuantity(index)
+										}
+									>
 										+
 									</button>
 								</div>
@@ -205,7 +271,10 @@ function DetailProduct(props) {
 							</div>
 						</div>
 						<div className="right-add-to-cart">
-							<button className="btn-add">
+							<button
+								className="btn-add"
+								onClick={handleOrderProduct}
+							>
 								Thêm vào giỏ hàng
 							</button>
 						</div>

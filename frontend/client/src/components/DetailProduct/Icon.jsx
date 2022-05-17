@@ -9,7 +9,7 @@ function Icon(props) {
 				width="33"
 				height="16"
 				viewBox="0 0 33 16"
-				class="_2BrR7A"
+				className="_2BrR7A"
 				fill="none"
 			>
 				<path
