@@ -80,12 +80,33 @@ function SignIn(props) {
 			});
 			console.log('Sign in user', response);
 			// setUserLogin(response.user);
-			dispatch(signInUser(response.user));
+			localStorage.setItem(
+				'user_login',
+				JSON.stringify({ ...response.user, isLogin: true })
+			);
+			dispatch(signInUser({ ...response.user, isLogin: true }));
 		} catch (error) {
 			console.log('Faild to login user: ', error);
 			setFoundUser(false);
 		}
 	};
+
+	const userLocalStorage =
+		JSON.parse(localStorage.getItem('user_login')) || '';
+	console.log('userLocalStorage', userLocalStorage);
+
+	useEffect(() => {
+		const handleRefreshPage = () => {
+			if (userLocalStorage.email) {
+				console.log('dispatch');
+				dispatch(signInUser(userLocalStorage));
+			} else {
+				console.log('not dispatch');
+			}
+		};
+
+		handleRefreshPage();
+	}, [userLocalStorage, dispatch]);
 
 	const handleHiddenPassword = (e) => {
 		setIsHiddenPassword(!isHiddenPassword);

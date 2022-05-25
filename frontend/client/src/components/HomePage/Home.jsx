@@ -228,6 +228,10 @@ function Home(props) {
 	const [productsCopy, setProductsCopy] = useState([]);
 
 	const dispatch = useDispatch();
+	// const currentUser = useSelector((state) => state.user);
+	// console.log('currentUser', currentUser);
+
+	// localStorage.setItem('user_login', JSON.stringify(currentUser));
 
 	useEffect(() => {
 		const getAllProductApi = async () => {
@@ -252,7 +256,7 @@ function Home(props) {
 				.includes(valueSearchInputNavBar.toLowerCase());
 		});
 		setProducts(filterProducts);
-	}, [valueSearchInputNavBar]);
+	}, [valueSearchInputNavBar, productsCopy]);
 
 	return (
 		<div className="home">

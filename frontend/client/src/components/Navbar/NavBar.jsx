@@ -44,7 +44,7 @@ function NavBar(props) {
 
 	const handleLogoutUser = () => {
 		dispatch(setLogin(false));
-		// localStorage.removeItem('user');
+		localStorage.removeItem('user_login');
 	};
 
 	const handleHiddenSetting = (e, nameMove) => {

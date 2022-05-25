@@ -1,11 +1,9 @@
-import logo from './logo.svg';
 import './App.css';
 import HomePage from './pages/HomePage';
 import {
 	BrowserRouter as Router,
 	Switch,
 	Route,
-	Link,
 	Redirect,
 } from 'react-router-dom';
 import ProfilePage from './pages/ProfilePage';
@@ -18,12 +16,15 @@ import { useSelector } from 'react-redux';
 import AdminPage from './pages/AdminPage';
 import CategoryPage from './pages/CategoryPage';
 import Footer from './components/Footer/Footer';
+import { useDispatch } from 'react-redux';
+import { signInUser } from './actions/user';
 
 function App() {
+	const dispatch = useDispatch();
 	const [login, setLogin] = useState(true);
 	const isLogin = useSelector((state) => state.user.isLogin);
 	const isStatus = useSelector((state) => state.user.status);
-	const user = useSelector((state) => state.user);
+
 	useEffect(() => {
 		setLogin(isLogin);
 	}, [isLogin]);
@@ -64,6 +65,7 @@ function App() {
 								<Route path="/detail-product/:slug">
 									<DetailProductPage />
 								</Route>
+								<Redirect from="*" to="/" />
 							</Switch>
 						</div>
 					</div>
