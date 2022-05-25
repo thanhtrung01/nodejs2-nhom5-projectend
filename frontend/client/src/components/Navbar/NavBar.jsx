@@ -8,6 +8,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { setLogin } from '../../actions/user';
 import product7 from '../../assets/images/product7.jpg';
 import { deleteProductToCart } from '../../actions/cart';
+import { addValueSearch } from '../../actions/searchProduct';
 
 const navbarList = [
 	{
@@ -29,17 +30,17 @@ function NavBar(props) {
 	const user = useSelector((state) => state.user);
 	const { username } = user;
 
-	const listProductToBuy = useSelector((state) => state.cart);
+	const [valueInputSearch, setValueInputSearch] = useState('');
 
-	console.log('listProductToBuy', listProductToBuy);
+	const listProductToBuy = useSelector((state) => state.cart);
 
 	const [isActive, setIsActive] = useState(0);
 	const [hiddenSetting, setHiddenSetting] = useState(false);
 	const dispatch = useDispatch();
 
-	const handleActiveIcon = (item) => {
-		setIsActive(item);
-	};
+	// const handleActiveIcon = (item) => {
+	// 	setIsActive(item);
+	// };
 
 	const handleLogoutUser = () => {
 		dispatch(setLogin(false));
@@ -57,6 +58,12 @@ function NavBar(props) {
 	const handleDeleteItemProduct = (index) => {
 		dispatch(deleteProductToCart(index));
 	};
+
+	const handleValueInputSearch = (e) => {
+		setValueInputSearch(e.target.value);
+		dispatch(addValueSearch(e.target.value));
+	};
+	// console.log({ valueInputSearch });
 
 	return status ? (
 		<div className="nav-bar">
@@ -76,6 +83,8 @@ function NavBar(props) {
 						id=""
 						className="search-input"
 						placeholder="Tìm kiếm..."
+						value={valueInputSearch}
+						onChange={handleValueInputSearch}
 					/>
 					<i className="fa-solid fa-magnifying-glass search-icon"></i>
 				</div>
@@ -167,8 +176,6 @@ function NavBar(props) {
 					<div
 						className="user-info"
 						onClick={(e) => handleHiddenSetting(e)}
-						// onMouseOver={(e) => handleHiddenSetting(e)}
-						// onMouseLeave={(e) => handleHiddenSetting(e)}
 					>
 						<img
 							src={userImg}

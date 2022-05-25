@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import './profile.scss';
 import { useSelector } from 'react-redux';
@@ -6,8 +6,20 @@ import { useSelector } from 'react-redux';
 function Profile(props) {
 	const user = useSelector((state) => state.user);
 	const { username, email } = user;
+	const [isEdit, setIsEdit] = useState(false);
 
-	console.log('User in profile', user);
+	const [userNameInput, setUserNameInput] = useState(username);
+
+	const handleEditUserInProfile = (e) => {
+		e.preventDefault();
+		setIsEdit(!isEdit);
+
+		// handle when click edit button
+	};
+
+	const handleValueInputProfile = (e) => {
+		setUserNameInput(e.target.value);
+	};
 
 	return (
 		<div className="profile">
@@ -16,9 +28,20 @@ function Profile(props) {
 				<form action="" className="form-profile">
 					<h4 className="profile-title">Thông tin cá nhân</h4>
 					<div className="line"></div>
-					<div className="profile-name profile-item">
-						<label>Họ và tên</label>
-						<input disabled type="text" value={username} />
+					<div
+						className={
+							isEdit
+								? 'profile-name'
+								: 'profile-name profile-item'
+						}
+					>
+						<label>Username</label>
+						<input
+							disabled={!isEdit}
+							type="text"
+							value={userNameInput}
+							onChange={handleValueInputProfile}
+						/>
 					</div>
 					<div className="line"></div>
 					<div className="profile-name profile-item">
@@ -31,7 +54,12 @@ function Profile(props) {
 						<input disabled type="text" value="**********" />
 					</div>
 					<div className="line"></div>
-					<button className="profile-edit">Chỉnh sửa</button>
+					<button
+						className="profile-edit"
+						onClick={handleEditUserInProfile}
+					>
+						{isEdit ? 'Save' : 'Edit'}
+					</button>
 				</form>
 			</div>
 		</div>
@@ -40,4 +68,4 @@ function Profile(props) {
 
 Profile.propTypes = {};
 
-export default Profile
+export default Profile;

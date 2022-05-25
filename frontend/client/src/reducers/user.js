@@ -14,6 +14,7 @@ const userReducer = (state = initialUser, action) => {
 				isLogin: false,
 			};
 		case 'CREATE_LOGIN':
+			console.log('create_login', action.payload);
 			return {
 				...state,
 				isLogin: true,

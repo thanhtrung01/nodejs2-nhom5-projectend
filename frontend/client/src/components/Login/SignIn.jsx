@@ -12,7 +12,7 @@ function SignIn(props) {
 		password: '',
 	});
 	const [validName, setValidName] = useState(false);
-	const [userLogin, setUserLogin] = useState({});
+	// const [userLogin, setUserLogin] = useState({});
 	const [validPassword, setValidPassword] = useState(false);
 	const [foundUser, setFoundUser] = useState(true);
 	const [isHiddenPassword, setIsHiddenPassword] = useState(false);
@@ -60,25 +60,26 @@ function SignIn(props) {
 		if (validUser.isValid) {
 			// console.log('submit value form đăng nhập', objUser);
 			// login
-			loginUser();
+			loginUserHome();
 		} else {
 			if (!validUser.arrNumberValid[0]) {
 				setValidName(true);
 			}
 			if (validUser.arrNumberValid.includes(1)) {
-				console.log('123');
 				setValidPassword(true);
 			}
 		}
 	};
 
-	const loginUser = async () => {
+	const loginUserHome = async () => {
 		try {
 			const newObjUser = { ...objUser };
+			console.log({ newObjUser });
 			const response = await userApi.loginUser({
 				...newObjUser,
 			});
-			setUserLogin(response.user);
+			console.log('Sign in user', response);
+			// setUserLogin(response.user);
 			dispatch(signInUser(response.user));
 		} catch (error) {
 			console.log('Faild to login user: ', error);

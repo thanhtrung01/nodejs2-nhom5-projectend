@@ -15,17 +15,12 @@ import { useEffect, useState } from 'react';
 import DetailProductPage from './pages/DetailProductPage';
 import NavBar from './components/Navbar/NavBar';
 import { useSelector } from 'react-redux';
-import Admin from './pages/Admin';
-import { useDispatch } from 'react-redux';
-import { signInUser } from './actions/user';
+import AdminPage from './pages/AdminPage';
 import CategoryPage from './pages/CategoryPage';
 import Footer from './components/Footer/Footer';
 
 function App() {
-	const dispatch = useDispatch();
-
 	const [login, setLogin] = useState(true);
-	// const [defaultUser, setDefaultUser] = useState({});
 	const isLogin = useSelector((state) => state.user.isLogin);
 	const isStatus = useSelector((state) => state.user.status);
 	const user = useSelector((state) => state.user);
@@ -52,13 +47,16 @@ function App() {
 									<HomePage />
 								</Route>
 								<Route path="/admin">
-									<Admin />
+									<AdminPage />
 								</Route>
 								<Route path="/cart">
 									<CartPage />
 								</Route>
 								<Route path="/profile">
 									<ProfilePage />
+								</Route>
+								<Route path="/category/:slugCategory">
+									<CategoryPage />
 								</Route>
 								<Route path="/category">
 									<CategoryPage />

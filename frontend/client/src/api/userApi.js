@@ -14,7 +14,7 @@ const userApi = {
 	},
 	createUser: (params) => {
 		const url = `/auth/register`;
-		// console.log('params:', params);
+		console.log('params in sign up:', params);
 		return axiosClient.post(url, params);
 	},
 	loginUser: (params) => {

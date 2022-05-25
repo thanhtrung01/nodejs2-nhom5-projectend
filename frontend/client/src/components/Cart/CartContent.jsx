@@ -13,7 +13,7 @@ function CartContent(props) {
 	const { productToBuy } = props;
 	const dispatch = useDispatch();
 
-	console.log('productToBuy', productToBuy);
+	// console.log('productToBuy', productToBuy);
 
 	const handleRiseQuantity = (index) => {
 		dispatch(updateProductToCart(index));

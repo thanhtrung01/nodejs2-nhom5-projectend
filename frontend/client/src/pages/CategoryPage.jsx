@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import Category from '../components/Category/Category';
 
 function CategoryPage(props) {
@@ -9,7 +8,5 @@ function CategoryPage(props) {
 		</div>
 	);
 }
-
-CategoryPage.propTypes = {};
 
 export default CategoryPage;

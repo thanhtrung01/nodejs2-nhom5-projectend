@@ -27,6 +27,29 @@
 				margin: 8px 0 24px;
 			}
 
+			.profile-name {
+				margin: 10px 0 24px 10px;
+				label {
+					font-weight: 500;
+					margin-bottom: 10px;
+					display: block;
+				}
+
+				input {
+					margin-left: 6px;
+					padding: 4px 30px 4px 10px;
+					font-weight: 300;
+					font-size: 16px;
+					// border: none;
+					// outline: none;
+
+					&:disabled {
+						color: black;
+						background-color: transparent;
+					}
+				}
+			}
+
 			.profile-item {
 				margin: 10px 0 24px 10px;
 				label {

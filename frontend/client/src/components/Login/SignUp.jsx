@@ -65,7 +65,7 @@ function SignUp(props) {
 				console.log('err');
 		}
 	};
-	console.log('Current Obj', objSignUpUser);
+	// console.log('Current Obj', objSignUpUser);
 
 	const checkFieldUser = (email, username, password, passwordAgain) => {
 		let isValid = true;
@@ -98,6 +98,7 @@ function SignUp(props) {
 			objSignUpUser.password
 		);
 		if (validUser.isValid) {
+			console.log('Đăng nhập từ sign up');
 			fetchUserList();
 			console.log('objSignUpUser', objSignUpUser);
 
@@ -128,12 +129,16 @@ function SignUp(props) {
 	};
 
 	const fetchUserList = async () => {
+		console.log('đã chạy vào fetchUserList');
 		try {
+			console.log('chạy vào tạo user dưới db');
 			const newObjUser = { ...objSignUpUser };
+			console.log('newObjUser before save db', newObjUser);
 			delete newObjUser.passwordAgain;
 			const response = await userApi.createUser({
 				...newObjUser,
 			});
+			console.log('response');
 			console.log('response', response);
 		} catch (error) {
 			console.log('Faild to fetch user list: ', error);
@@ -165,13 +170,13 @@ function SignUp(props) {
 				</div>
 				<div className="form-input">
 					<label htmlFor="input-name" className="input-name">
-						Họ và tên:
+						Username
 					</label>
 					<input
 						className="input-text"
 						type="text"
 						id="input-name"
-						placeholder="Họ và tên"
+						placeholder="Username"
 						value={objSignUpUser.username}
 						onChange={(e) => handleValueUser(e, 'username')}
 					/>

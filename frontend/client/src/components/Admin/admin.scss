@@ -1,0 +1,24 @@
+.admin {
+	.user-item {
+		.user-info {
+			display: flex;
+			width: 110px;
+			.user-image {
+				img {
+					width: 40px;
+					height: 40px;
+
+					border-radius: 50%;
+				}
+			}
+
+			.user-detail {
+				margin-left: 10px;
+				.user-name {
+				}
+				.user-email {
+				}
+			}
+		}
+	}
+}

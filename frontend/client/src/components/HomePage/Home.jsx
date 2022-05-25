@@ -45,7 +45,7 @@ import 'swiper/css/scrollbar';
 import { Link } from 'react-router-dom';
 import ProductItem from '../ProductItem/ProductItem';
 import productApi from '../../api/productApi';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { addProduct } from '../../actions/product';
 
 const swiperOptions = {
@@ -225,6 +225,7 @@ function Home(props) {
 	const navigationPrevRef = useRef();
 	const navigationNextRef = useRef();
 	const [products, setProducts] = useState([]);
+	const [productsCopy, setProductsCopy] = useState([]);
 
 	const dispatch = useDispatch();
 
@@ -233,6 +234,7 @@ function Home(props) {
 			try {
 				const response = await productApi.getAll();
 				setProducts(response.products);
+				setProductsCopy(response.products);
 				dispatch(addProduct(response.products));
 			} catch (error) {
 				console.log('Faild to fetch user list: ', error);
@@ -241,7 +243,16 @@ function Home(props) {
 		getAllProductApi();
 	}, []);
 
-	console.log('products', products);
+	const valueSearchInputNavBar = useSelector((state) => state.search.value);
+
+	useEffect(() => {
+		const filterProducts = productsCopy.filter((itemProduct, index) => {
+			return itemProduct.title
+				.toLowerCase()
+				.includes(valueSearchInputNavBar.toLowerCase());
+		});
+		setProducts(filterProducts);
+	}, [valueSearchInputNavBar]);
 
 	return (
 		<div className="home">

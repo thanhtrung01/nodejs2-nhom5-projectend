@@ -2,122 +2,48 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import './category.scss';
 
-import product1 from '../../assets/images/product1.jpg';
-import product2 from '../../assets/images/product2.jpg';
-import product3 from '../../assets/images/product3.jpg';
-import product4 from '../../assets/images/product4.jpg';
-import product5 from '../../assets/images/product5.jpg';
-import product6 from '../../assets/images/product6.jpg';
-import product7 from '../../assets/images/product7.jpg';
 import ProductItem from '../ProductItem/ProductItem';
-import { useSelector } from 'react-redux';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { addProduct } from '../../actions/product';
 import productApi from '../../api/productApi';
+import { Link, useParams, useRouteMatch } from 'react-router-dom';
 
-const productList = [
-	{
-		id: 1,
-		title: 'Balo du lịch đi học giá rẻ thời trang cute đẹp MiniCat BL464 ( không có móc gấu)',
-		description: 'Meat Balls For Pet',
-		category: '',
-		price: 89,
-		// priceOld: '108.000₫',
-		imageUrl: product1,
-		categorySlug: 'meat-balls-for-pet',
-		slug: 'meat-balls-for-pet',
-		sale: true,
-		quantity: 121,
-	},
-	{
-		id: 2,
-		title: 'Giày Jordan 1 High Panda, Giày Thể Thao JD1 Cao Cổ Màu Đen, Da Bò Cao Cấp Full Size Nam Nữ | JDD002',
-		description: 'Meat Balls For Pet',
-		category: '',
-		price: 90,
-		// priceOld: '108.000₫',
-		imageUrl: product2,
-		categorySlug: 'meat-balls-for-pet',
-		slug: 'meat-balls-for-pet',
-		sale: true,
-		quantity: 121,
-	},
-	{
-		id: 3,
-		title: 'Áo Thun T LÀO Hiphop Nam Nữ Ulzzang Unisex TATO vải Cotton cao cấp, thấm hút mồ hôi,năng động. Dễ phối đồ.',
-		description: 'Meat Balls For Pet',
-		category: '',
-		price: 90,
-		// priceOld: '108.000₫',
-		imageUrl: product3,
-		categorySlug: 'meat-balls-for-pet',
-		slug: 'meat-balls-for-pet',
-		sale: true,
-		quantity: 121,
-	},
-	{
-		id: 4,
-		title: 'Bộ nữ áo thun cotton + quần loang,set đồ nữ mặc hè đi chơi,đi dạo',
-		description: 'Meat Balls For Pet',
-		category: '',
-		price: 90,
-		// priceOld: '108.000₫',
-		imageUrl: product4,
-		categorySlug: 'meat-balls-for-pet',
-		slug: 'meat-balls-for-pet',
-		sale: true,
-		quantity: 121,
-	},
-	{
-		id: 5,
-		title: 'Áo thun CHESS bàn cờ unisex - Phông cộc tay dáng suông, oversize in hình họa tiết cá tính, nổi bật',
-		description: 'Meat Balls For Pet',
-		category: '',
-		price: 90,
-		// priceOld: '108.000₫',
-		imageUrl: product5,
-		categorySlug: 'meat-balls-for-pet',
-		slug: 'meat-balls-for-pet',
-		sale: true,
-		quantity: 121,
-	},
-	{
-		id: 6,
-		title: 'Dép đi biển nữ quai ngang mùa hè phiên bản Hàn Quốc đế dày chống trượt, T111',
-		description: 'Meat Balls For Pet',
-		category: '',
-		price: 90,
-		// priceOld: '108.000₫',
-		imageUrl: product6,
-		categorySlug: 'meat-balls-for-pet',
-		slug: 'meat-balls-for-pet',
-		sale: true,
-		quantity: 121,
-	},
-	{
-		id: 7,
-		title: 'Kệ sách để bàn bằng gỗ đa năng Béo shop màu trắng tháo rời lắp ghép dễ dàng tiện lợi',
-		description: 'Meat Balls For Pet',
-		category: '',
-		price: 90,
-		// priceOld: '108.000₫',
-		imageUrl: product7,
-		categorySlug: 'meat-balls-for-pet',
-		slug: 'meat-balls-for-pet',
-		sale: true,
-		quantity: 121,
-	},
+const listCategories = [
+	'Tất cả',
+	'Áo khoác',
+	'Áo Vest và Blazer',
+	'Áo Hoodie, Áo Len & Áo Nỉ',
+	'Quần Jeans',
+	'Quần Dài/Quần Âu',
+];
+
+const slugCategories = [
+	'',
+	'ao-khoac',
+	'ao-vest',
+	'ao-hoodie',
+	'quan-jeans',
+	'quan-dai',
 ];
 
 function Category(props) {
 	const [products, setProducts] = useState([]);
+	const [productsCopy, setProductsCopy] = useState([]);
 	const dispatch = useDispatch();
+
+	const { slugCategory } = useParams();
+	console.log({ slugCategory });
+
+	const [numberCategory, setNumberCategory] = useState(0);
+
+	const valueSearchInputNavBar = useSelector((state) => state.search.value);
 
 	useEffect(() => {
 		const getAllProductApi = async () => {
 			try {
 				const response = await productApi.getAll();
 				setProducts(response.products);
+				setProductsCopy(response.products);
 				dispatch(addProduct(response.products));
 			} catch (error) {
 				console.log('Faild to fetch user list: ', error);
@@ -126,6 +52,20 @@ function Category(props) {
 		getAllProductApi();
 	}, []);
 
+	useEffect(() => {
+		const filterProducts = productsCopy.filter((itemProduct, index) => {
+			return itemProduct.title
+				.toLowerCase()
+				.includes(valueSearchInputNavBar.toLowerCase());
+		});
+		setProducts(filterProducts);
+	}, [valueSearchInputNavBar, productsCopy]);
+
+	const handleClickCategory = (index) => {
+		setNumberCategory(index);
+	};
+	// console.log('NumberCategory', numberCategory);
+	// `${url}/${slugCategories[index]}`
 	return (
 		<div className="category-wrap">
 			<div className="category-left">
@@ -134,16 +74,28 @@ function Category(props) {
 					<p className="left-header-title">Tất Cả Danh Mục</p>
 				</div>
 				<ul className="left-list-option">
-					<li className="list-option active">Thời trang nam</li>
-					<li className="list-option">Áo khoác</li>
-					<li className="list-option">Áo Vest và Blazer </li>
-					<li className="list-option">Áo Hoodie, Áo Len & Áo Nỉ</li>
-					<li className="list-option">Quần Jeans</li>
-					<li className="list-option">Quần Dài/Quần Âu</li>
-					{/* +35 top */}
+					{listCategories.map((itemCategory, index) => (
+						<li
+							className={
+								numberCategory === index
+									? 'list-option active'
+									: 'list-option'
+							}
+							key={index}
+							onClick={() => handleClickCategory(index)}
+						>
+							<Link
+								to={`/category/${slugCategories[index]}`}
+								className="option-link"
+							>
+								{itemCategory}
+							</Link>
+						</li>
+					))}
 					<svg
 						viewBox="0 0 4 7"
 						className="option-active shopee-svg-icon shopee-category-list__main-category__caret icon-down-arrow-right-filled"
+						style={{ top: numberCategory * 36 + 16 + 'px' }}
 					>
 						<polygon points="4 3.5 0 0 0 7"></polygon>
 					</svg>
