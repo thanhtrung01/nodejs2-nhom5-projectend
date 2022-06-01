@@ -5,7 +5,7 @@ const CTRL = {};
 //Lấy dữ liệu đơn hàng từ người dùng
 CTRL.getOrders = (req, res) => {
   Order.find({})
-    .populate('client')
+    .populate('user')
     .populate('orderItems.product')
     .exec((err, orders) => {
       if (err) {
@@ -24,7 +24,10 @@ CTRL.getOrders = (req, res) => {
 //Lấy dữ liệu đơn hàng theo id
 CTRL.getOrder = (req, res) => {
   const { orderId } = req.params;
-  Order.findById(orderId).exec((err, order) => {
+  Order.findById(orderId)
+  .populate('user')
+  .populate('orderItems.product')
+  .exec((err, order) => {
     if (err) {
       return res.status(500).json({
         ok: false,
@@ -40,19 +43,19 @@ CTRL.getOrder = (req, res) => {
 
 //Tạo đơn hàng
 CTRL.createOrder = (req, res) => {
-  validateStock(req.body.orderItems, (cartItems) => {
-    if (cartItems == false) {
-      return res.status(500).json({
-        ok: false,
-        msg: 'The product is not available at the moment.',
-      });
-    }
+  // validateStock(req.body.orderItems, (cartItems) => {
+    // if (cartItems == false) {
+    //   return res.status(500).json({
+    //     ok: false,
+    //     msg: 'The product is not available at the moment.',
+    //   });
+    // }
 
     const newOrder = new Order({
-      client: req.body.client,
+      user: req.body.user,
       serial: req.body.serial,
       total: req.body.total,
-      orderItems: cartItems,
+      orderItems: req.body.orderItems,
     });
 
     newOrder.save((err, order) => {
@@ -68,7 +71,8 @@ CTRL.createOrder = (req, res) => {
         order,
       });
     });
-  });
+  // });
+  
 };
 
 //Xóa đơn hàng

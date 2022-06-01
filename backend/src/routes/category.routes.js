@@ -6,7 +6,7 @@ const { isAuth } = require('../middlewares/authentication');
 
 router.get('/', categoryCTRL.getCategories);
 router.get('/:categoryId', categoryCTRL.getCategory);
-router.post('/', categoryCTRL.createCategory);
+router.post('/create', categoryCTRL.createCategory);
 router.put('/:categoryId', isAuth, categoryCTRL.updateCategory);
 router.delete('/:categoryId', isAuth, categoryCTRL.deleteCategory);
 

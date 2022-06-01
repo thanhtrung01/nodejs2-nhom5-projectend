@@ -13,11 +13,15 @@ const ProductSchema = new Schema(
 			type: String,
 			required: true,
 		},
-		excerpt: {
-			type: String,
-			required: true,
-		},
 		description: {
+			type: String,
+			required: false,
+		},
+		sale: {
+			type: String,
+			required: false,
+		},
+		slug: {
 			type: String,
 			required: false,
 		},
@@ -25,7 +29,7 @@ const ProductSchema = new Schema(
 			type: Number,
 			required: true,
 		},
-		image: {
+		imageProduct: {
 			type: String,
 			maxlength: 512,
 		},
