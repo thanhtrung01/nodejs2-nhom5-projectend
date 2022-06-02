@@ -79,7 +79,7 @@ function SignIn(props) {
 				...newObjUser,
 			});
 			console.log('Sign in user', response);
-			// setUserLogin(response.user);
+
 			localStorage.setItem(
 				'user_login',
 				JSON.stringify({ ...response.user, isLogin: true })
@@ -93,7 +93,6 @@ function SignIn(props) {
 
 	const userLocalStorage =
 		JSON.parse(localStorage.getItem('user_login')) || '';
-	console.log('userLocalStorage', userLocalStorage);
 
 	useEffect(() => {
 		const handleRefreshPage = () => {

@@ -23,7 +23,8 @@ function App() {
 	const dispatch = useDispatch();
 	const [login, setLogin] = useState(true);
 	const isLogin = useSelector((state) => state.user.isLogin);
-	const isStatus = useSelector((state) => state.user.status);
+	const isAdmin = useSelector((state) => state.user.isAdmin);
+	console.log('isAdmin', isAdmin);
 
 	useEffect(() => {
 		setLogin(isLogin);
@@ -32,13 +33,13 @@ function App() {
 	return login ? (
 		<div className="app">
 			<Router>
-				<NavBar status={isStatus} />
+				<NavBar status={!isAdmin} />
 				<div className="app-container">
 					<div className="app-wrap">
 						<div>
 							<Switch>
 								<Route exact path="/login">
-									{login && isStatus ? (
+									{login && !isAdmin ? (
 										<Redirect from="/login" to="/" />
 									) : (
 										<Redirect from="/login" to="/admin" />
@@ -84,7 +85,7 @@ function App() {
 					)}
 				</Route>
 				<Route path="/admin">
-					{login && isStatus ? (
+					{login && isAdmin ? (
 						<Redirect to="/admin" />
 					) : (
 						<Redirect from="/admin" to="/login" />

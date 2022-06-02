@@ -15,7 +15,7 @@ function Admin(props) {
 				// setUsers(response.products);
 				// dispatch(addProduct(response.products));
 			} catch (error) {
-				console.log('Faild to fetch user list: ', error);
+				console.log('Failed to fetch user list: ', error);
 			}
 		};
 		getAllUserApi();

@@ -3,7 +3,7 @@ const initialUser = {
 	username: '',
 	email: '',
 	password: '',
-	status: true,
+	isAdmin: false,
 };
 
 const userReducer = (state = initialUser, action) => {

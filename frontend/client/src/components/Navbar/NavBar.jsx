@@ -214,7 +214,68 @@ function NavBar(props) {
 			</div>
 		</div>
 	) : (
-		<></>
+		<>
+			<div className="nav-bar">
+				<div className="nav-wrap">
+					<div className="nav-logo">
+						<Link
+							to="/"
+							onClick={(e) => handleHiddenSetting(e, 'home')}
+						>
+							<img src={logo} alt="" className="logo-image" />
+						</Link>
+					</div>
+
+					<div className="nav-user">
+						<div
+							className="user-info"
+							onClick={(e) => handleHiddenSetting(e)}
+						>
+							<img
+								src={userImg}
+								alt=""
+								width="80"
+								className="user-img"
+							/>
+							<p className="user-name">{username}</p>
+
+							<div
+								className="user-logout"
+								style={{ color: 'white' }}
+								onClick={handleLogoutUser}
+							>
+								<i className="fa-solid fa-arrow-right-from-bracket"></i>
+							</div>
+						</div>
+
+						{/* <div
+							className={`user-setting ${
+								hiddenSetting ? 'active' : ''
+							}`}
+						>
+							<div className="setting-item">
+								<Link
+									to="/profile"
+									onClick={handleHiddenSetting}
+									className="user-profile"
+								>
+									Hồ sơ
+								</Link>
+							</div>
+							<div className="setting-item">
+								<Link
+									to="/login"
+									className="user-logout"
+									onClick={handleLogoutUser}
+								>
+									Đăng xuất
+								</Link>
+							</div>
+						</div> */}
+					</div>
+				</div>
+			</div>
+		</>
 	);
 }
 

@@ -13,7 +13,7 @@ function SignUp(props) {
 		username: '',
 		password: '',
 		passwordAgain: '',
-		status: true,
+		isAdmin: false,
 	});
 	const [validEmail, setValidEmail] = useState(false);
 	const [validName, setValidName] = useState(false);
