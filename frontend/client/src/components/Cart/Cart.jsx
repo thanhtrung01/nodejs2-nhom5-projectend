@@ -4,14 +4,47 @@ import './cart.scss';
 import CartContent from './CartContent';
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteAllProductToCart } from '../../actions/cart';
+import productApi from '../../api/productApi';
 function Cart(props) {
 	const dispatch = useDispatch();
 
+	const user = useSelector((state) => state.user);
 	const productToBuy = useSelector((state) => state.cart);
-	console.log('productToBuy in Cart', productToBuy);
 
 	const handleDeleteAllProductToBuy = () => {
 		dispatch(deleteAllProductToCart());
+	};
+
+	const handleUserBuyProduct = async () => {
+		console.log('mua hang');
+
+		const arrProductInOrder = productToBuy.map((itemToBuy, index) => {
+			return {
+				product: itemToBuy._id,
+				qty: itemToBuy.quantityToBuy,
+			};
+		});
+
+		// console.log('arrProductInOrder', arrProductInOrder);
+
+		const totalQuantityProductToBuy = productToBuy.reduce(
+			(totalQty, itemProduct) => {
+				return totalQty + itemProduct.quantityToBuy;
+			},
+			0
+		);
+
+		const objOrder = {
+			user: user._id,
+			serial: '1',
+			total: totalQuantityProductToBuy,
+			orderItems: [...arrProductInOrder],
+		};
+
+		// console.log('objOrder', objOrder);
+
+		const responseBuyProduct = await productApi.createOrder(objOrder);
+		console.log('responseBuyProduct', responseBuyProduct);
 	};
 
 	return (
@@ -57,7 +90,7 @@ function Cart(props) {
 								.replace(/\B(?=(\d{3})+(?!\d))/g, '.')}
 						</span>
 					</p>
-					<button>Mua hàng</button>
+					<button onClick={handleUserBuyProduct}>Mua hàng</button>
 				</div>
 			</div>
 		</div>

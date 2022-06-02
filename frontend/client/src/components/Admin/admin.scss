@@ -21,4 +21,46 @@
 			}
 		}
 	}
+
+	.header {
+		display: flex;
+
+		.show {
+			margin-top: 20px;
+			border: none;
+			outline: none;
+			padding: 5px;
+			background-color: #e89f90;
+			color: white;
+			border-radius: 5px;
+
+			&:hover {
+				opacity: 0.8;
+			}
+		}
+
+		.create-new-product {
+			margin-right: 15px;
+		}
+	}
+}
+
+.admin-product-header {
+	display: flex;
+	padding: 10px 20px;
+
+	.header-name-product {
+	}
+	.header-name-category {
+		margin-left: 265px;
+	}
+	.header-name-price {
+		margin-left: 330px;
+	}
+	.header-name-quantity {
+		margin-left: 155px;
+	}
+	.header-name-operate {
+		margin-left: 127px;
+	}
 }

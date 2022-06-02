@@ -10,10 +10,8 @@ import {
 } from '../../actions/cart';
 
 function CartContent(props) {
-	const { productToBuy } = props;
+	const { productToBuy, isQuantity } = props;
 	const dispatch = useDispatch();
-
-	// console.log('productToBuy', productToBuy);
 
 	const handleRiseQuantity = (index) => {
 		dispatch(updateProductToCart(index));
@@ -32,8 +30,14 @@ function CartContent(props) {
 	return (
 		<div className="cart-content-wrap">
 			{productToBuy.map((item, indexItem) => {
-				const { imageProduct, title, price, quantityToBuy, index } =
-					item;
+				const {
+					imageProduct,
+					title,
+					price,
+					quantityToBuy,
+					index,
+					quantity,
+				} = item;
 				return (
 					<div className="cart-item-to-buy" key={indexItem}>
 						<div className="item-image">
@@ -57,37 +61,50 @@ function CartContent(props) {
 										.replace(/\B(?=(\d{3})+(?!\d))/g, '.')}
 								</div>
 							</div>
-							<div className="item-wrap">
-								<div className="item-quantity item-info-detail">
-									<button
-										onClick={() =>
-											handleReduceQuantity(index)
-										}
-									>
-										-
-									</button>
-									<input
-										className="quantity-input"
-										type="text"
-										value={quantityToBuy}
-									/>
-									<button
-										onClick={() =>
-											handleRiseQuantity(index)
-										}
-									>
-										+
-									</button>
+							{isQuantity ? (
+								<div className="quantity-product-admin">
+									{quantity}
 								</div>
-							</div>
-							<div className="item-wrap">
-								<div className="item-totalPrice item-info-detail">
-									₫
-									{(quantityToBuy * price)
-										.toString()
-										.replace(/\B(?=(\d{3})+(?!\d))/g, '.')}
+							) : (
+								<div className="item-wrap">
+									<div className="item-quantity item-info-detail">
+										<button
+											onClick={() =>
+												handleReduceQuantity(index)
+											}
+										>
+											-
+										</button>
+										<input
+											className="quantity-input"
+											type="text"
+											value={quantityToBuy}
+										/>
+										<button
+											onClick={() =>
+												handleRiseQuantity(index)
+											}
+										>
+											+
+										</button>
+									</div>
 								</div>
-							</div>
+							)}
+							{isQuantity ? (
+								<></>
+							) : (
+								<div className="item-wrap">
+									<div className="item-totalPrice item-info-detail">
+										₫
+										{(quantityToBuy * price)
+											.toString()
+											.replace(
+												/\B(?=(\d{3})+(?!\d))/g,
+												'.'
+											)}
+									</div>
+								</div>
+							)}
 							<div className="item-wrap">
 								<div
 									className="item-delete item-info-detail"

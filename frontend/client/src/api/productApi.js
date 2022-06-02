@@ -10,6 +10,14 @@ const productApi = {
 		const url = `/products/${id}`;
 		return axiosClient.get(url);
 	},
+	createOrder: (order) => {
+		const url = `/orders/create-order`;
+		return axiosClient.post(url, { ...order });
+	},
+	getAllOrders: () => {
+		const url = `/orders/`;
+		return axiosClient.get(url);
+	},
 };
 
 export default productApi;

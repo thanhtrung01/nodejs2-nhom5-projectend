@@ -29,13 +29,13 @@ function ProductItem(props) {
 		.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
 
 	const handleOrderProduct = () => {
-		console.log('123', props);
+		// console.log('123', props);
 
 		const productInCart = productToBuy.find((item, index) => {
 			return item.code === props.code;
 		});
 
-		console.log('productInCart', productInCart);
+		// console.log('productInCart', productInCart);
 		if (productInCart) {
 			dispatch(updateProductToCart(productInCart.index));
 		} else {
