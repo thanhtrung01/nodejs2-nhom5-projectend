@@ -72,6 +72,7 @@ CTRL.updateUser = (req, res) => {
   const updUser = {
     // email: req.body.email,
     username: req.body.username,
+    phone: req.body.phone,
     // password: bcrypt.hashSync(req.body.password, 10),
     // avatar: req.body.avatar,
   };
