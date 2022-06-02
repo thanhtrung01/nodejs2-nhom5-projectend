@@ -1,8 +1,10 @@
 const initialUser = {
+	_id: '',
 	isLogin: false,
 	username: '',
 	email: '',
 	password: '',
+	phone: '',
 	isAdmin: false,
 };
 

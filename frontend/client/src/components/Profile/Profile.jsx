@@ -1,24 +1,45 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import './profile.scss';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import userApi from '../../api/userApi';
+import { signInUser } from '../../actions/user';
 
 function Profile(props) {
+	const dispatch = useDispatch();
+
 	const user = useSelector((state) => state.user);
-	const { username, email } = user;
+	const { username, email, phone, _id } = user;
 	const [isEdit, setIsEdit] = useState(false);
 
 	const [userNameInput, setUserNameInput] = useState(username);
+	const [phoneInput, setPhoneInput] = useState(phone || '');
 
-	const handleEditUserInProfile = (e) => {
+	const handleEditUserInProfile = async (e) => {
 		e.preventDefault();
 		setIsEdit(!isEdit);
 
 		// handle when click edit button
+		if (isEdit) {
+			console.log('userNameInput', userNameInput);
+			console.log('phoneInput', phoneInput);
+
+			const newUserAfterEdit = await userApi.editUserPut(_id, {
+				username: userNameInput,
+				phone: phoneInput,
+			});
+			console.log('newUserAfterEdit', newUserAfterEdit.user);
+			dispatch(signInUser(newUserAfterEdit.user));
+		}
+	};
+	console.log('phone user', phone);
+
+	const handleValueNameInputProfile = (e) => {
+		setUserNameInput(e.target.value);
 	};
 
-	const handleValueInputProfile = (e) => {
-		setUserNameInput(e.target.value);
+	const handleValuePhoneInputProfile = (e) => {
+		setPhoneInput(e.target.value);
 	};
 
 	return (
@@ -40,7 +61,7 @@ function Profile(props) {
 							disabled={!isEdit}
 							type="text"
 							value={userNameInput}
-							onChange={handleValueInputProfile}
+							onChange={handleValueNameInputProfile}
 						/>
 					</div>
 					<div className="line"></div>
@@ -52,6 +73,22 @@ function Profile(props) {
 					<div className="profile-name profile-item">
 						<label>Password</label>
 						<input disabled type="text" value="**********" />
+					</div>
+					<div className="line"></div>
+					<div
+						className={
+							isEdit
+								? 'profile-name'
+								: 'profile-name profile-item'
+						}
+					>
+						<label>Phone</label>
+						<input
+							disabled={!isEdit}
+							type="text"
+							value={phoneInput}
+							onChange={handleValuePhoneInputProfile}
+						/>
 					</div>
 					<div className="line"></div>
 					<button

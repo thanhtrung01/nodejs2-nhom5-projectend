@@ -12,6 +12,10 @@ const userApi = {
 		const url = `/user/${id}`;
 		return axiosClient.get(url);
 	},
+	editUserPut: (id, dataEdit) => {
+		const url = `/users/${id}`;
+		return axiosClient.put(url, { ...dataEdit });
+	},
 	createUser: (params) => {
 		const url = `/auth/register`;
 		console.log('params in sign up:', params);
