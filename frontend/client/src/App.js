@@ -6,6 +6,8 @@ import {
 	Route,
 	Redirect,
 } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import ProfilePage from './pages/ProfilePage';
 import CartPage from './pages/CartPage';
 import LoginPage from './pages/LoginPage';
@@ -24,7 +26,7 @@ function App() {
 	const [login, setLogin] = useState(true);
 	const isLogin = useSelector((state) => state.user.isLogin);
 	const isAdmin = useSelector((state) => state.user.isAdmin);
-	console.log('isAdmin', isAdmin);
+	// console.log('isAdmin', isAdmin);
 
 	useEffect(() => {
 		setLogin(isLogin);
@@ -32,6 +34,17 @@ function App() {
 
 	return login ? (
 		<div className="app">
+			<ToastContainer
+				position="bottom-right"
+				autoClose={5000}
+				hideProgressBar={false}
+				newestOnTop={false}
+				closeOnClick
+				rtl={false}
+				pauseOnFocusLoss
+				draggable
+				pauseOnHover
+			/>
 			<Router>
 				<NavBar status={!isAdmin} />
 				<div className="app-container">

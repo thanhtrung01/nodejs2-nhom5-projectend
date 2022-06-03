@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import userApi from '../../api/userApi';
 import { useDispatch } from 'react-redux';
 import { createUser } from '../../actions/user';
+import { toast } from 'react-toastify';
 
 function SignUp(props) {
 	const { handleChangeForm } = props;
@@ -111,6 +112,7 @@ function SignUp(props) {
 				password: '',
 				passwordAgain: '',
 			});
+			toast('đăng ký thành công');
 		} else {
 			if (validUser.arrNumberValid.includes(0)) {
 				console.log('invalid Email');

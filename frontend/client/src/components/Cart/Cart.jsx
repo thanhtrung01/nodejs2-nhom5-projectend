@@ -5,6 +5,7 @@ import CartContent from './CartContent';
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteAllProductToCart } from '../../actions/cart';
 import productApi from '../../api/productApi';
+import { toast } from 'react-toastify';
 function Cart(props) {
 	const dispatch = useDispatch();
 
@@ -25,8 +26,6 @@ function Cart(props) {
 			};
 		});
 
-		// console.log('arrProductInOrder', arrProductInOrder);
-
 		const totalQuantityProductToBuy = productToBuy.reduce(
 			(totalQty, itemProduct) => {
 				return totalQty + itemProduct.quantityToBuy;
@@ -41,10 +40,9 @@ function Cart(props) {
 			orderItems: [...arrProductInOrder],
 		};
 
-		// console.log('objOrder', objOrder);
-
 		const responseBuyProduct = await productApi.createOrder(objOrder);
 		console.log('responseBuyProduct', responseBuyProduct);
+		toast('Mua hàng thành công');
 	};
 
 	return (

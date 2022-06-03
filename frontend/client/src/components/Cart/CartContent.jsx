@@ -8,10 +8,18 @@ import {
 	updateProductToCart,
 	deleteProductToCart,
 } from '../../actions/cart';
+import productApi from '../../api/productApi';
 
 function CartContent(props) {
-	const { productToBuy, isQuantity } = props;
+	const {
+		productToBuy,
+		isQuantity,
+		isDeleteProduct,
+		handleDeleteProductById,
+	} = props;
 	const dispatch = useDispatch();
+
+	// console.log('productToBuy', productToBuy);
 
 	const handleRiseQuantity = (index) => {
 		dispatch(updateProductToCart(index));
@@ -27,10 +35,17 @@ function CartContent(props) {
 		dispatch(deleteProductToCart(index));
 	};
 
+	const handleDeleteProductFromAdmin = (id) => {
+		console.log('delete product by id', id);
+		// const resDeleteProduct = await productApi.deleteProduct(id);
+		handleDeleteProductById(id);
+	};
+
 	return (
 		<div className="cart-content-wrap">
 			{productToBuy.map((item, indexItem) => {
 				const {
+					_id,
 					imageProduct,
 					title,
 					price,
@@ -50,6 +65,7 @@ function CartContent(props) {
 							<p className="product-title">{title}</p>
 							<p className="product-category">
 								Phân loại hàng: {item.idCategory.nameCategory}
+								{/* Phân loại hàng: fake */}
 							</p>
 						</div>
 						<div className="item-info">
@@ -106,12 +122,23 @@ function CartContent(props) {
 								</div>
 							)}
 							<div className="item-wrap">
-								<div
-									className="item-delete item-info-detail"
-									onClick={() => handleDeleteItem(index)}
-								>
-									Xóa
-								</div>
+								{isDeleteProduct ? (
+									<div
+										className="item-delete item-info-detail"
+										onClick={() =>
+											handleDeleteProductFromAdmin(_id)
+										}
+									>
+										Xóa
+									</div>
+								) : (
+									<div
+										className="item-delete item-info-detail"
+										onClick={() => handleDeleteItem(index)}
+									>
+										Xóa
+									</div>
+								)}
 							</div>
 						</div>
 					</div>

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import userApi from '../../api/userApi';
 import { useDispatch } from 'react-redux';
 import { signInUser } from '../../actions/user';
+import { toast } from 'react-toastify';
 
 function SignIn(props) {
 	const { handleChangeForm } = props;
@@ -61,6 +62,7 @@ function SignIn(props) {
 			// console.log('submit value form đăng nhập', objUser);
 			// login
 			loginUserHome();
+			toast('Đăng nhập thành công');
 		} else {
 			if (!validUser.arrNumberValid[0]) {
 				setValidName(true);
@@ -97,7 +99,7 @@ function SignIn(props) {
 	useEffect(() => {
 		const handleRefreshPage = () => {
 			if (userLocalStorage.email) {
-				console.log('dispatch');
+				// console.log('dispatch');
 				dispatch(signInUser(userLocalStorage));
 			} else {
 				console.log('not dispatch');

@@ -1,9 +1,9 @@
 import axiosClient from './axiosClient';
 
 const productApi = {
-	getAll: (params) => {
+	getAll: () => {
 		const url = '/products';
-		return axiosClient.get(url, { params });
+		return axiosClient.get(url);
 	},
 
 	get: (id) => {
@@ -17,6 +17,14 @@ const productApi = {
 	getAllOrders: () => {
 		const url = `/orders/`;
 		return axiosClient.get(url);
+	},
+	createProduct: (data) => {
+		const url = `/products/create-product`;
+		return axiosClient.post(url, { ...data });
+	},
+	deleteProduct: (id) => {
+		const url = `/products/${id}`;
+		return axiosClient.delete(url);
 	},
 };
 

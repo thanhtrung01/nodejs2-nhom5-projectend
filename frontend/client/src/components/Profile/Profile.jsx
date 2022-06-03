@@ -4,6 +4,7 @@ import './profile.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import userApi from '../../api/userApi';
 import { signInUser } from '../../actions/user';
+import { toast } from 'react-toastify';
 
 function Profile(props) {
 	const dispatch = useDispatch();
@@ -30,6 +31,7 @@ function Profile(props) {
 			});
 			console.log('newUserAfterEdit', newUserAfterEdit.user);
 			dispatch(signInUser(newUserAfterEdit.user));
+			toast('Chỉnh sửa user thành công');
 		}
 	};
 	console.log('phone user', phone);
